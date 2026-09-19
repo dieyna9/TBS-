@@ -1,0 +1,1408 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="max-age=604800" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Thiossane Business Service</title>
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script src="js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+<!-- Font awesome 5 -->
+<link href="fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet">
+
+<!-- custom style -->
+<link href="css/ui.css" rel="stylesheet" type="text/css"/>
+<link href="css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+
+<!-- custom javascript -->
+<script src="js/script.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+/// some script
+
+// jquery ready start
+$(document).ready(function() {
+
+    // =========================
+    // CHOIX DE LA LANGUE
+    // =========================
+
+    $(".language-option").click(function(e) {
+        e.preventDefault();
+
+        let language = $(this).data("language");
+        let text = $(this).text();
+
+        $("#languageBtn").text(text);
+
+        localStorage.setItem("language", language);
+    });
+
+
+    // =========================
+    // CHOIX DE LA DEVISE
+    // =========================
+
+    $(".currency-option").click(function(e) {
+        e.preventDefault();
+
+        let currency = $(this).data("currency");
+
+        $("#currencyBtn").text(currency);
+
+        localStorage.setItem("currency", currency);
+    });
+
+
+    // =========================
+    // RESTAURER LES CHOIX
+    // =========================
+
+    let savedLanguage = localStorage.getItem("language");
+
+    if (savedLanguage === "en") {
+        $("#languageBtn").text("English");
+    } else {
+        $("#languageBtn").text("Français");
+    }
+
+
+    let savedCurrency = localStorage.getItem("currency");
+
+    if (savedCurrency === "USD") {
+        $("#currencyBtn").text("USD");
+    } else {
+        $("#currencyBtn").text("FCFA");
+    }
+});
+</script>
+
+
+<style id="tbs-store-visual-overrides">
+/* T.B.S. — couleurs vertes à la place du bleu */
+.btn-primary,
+.btn-primary:focus,
+.btn-primary:hover,
+.btn-primary:not(:disabled):not(.disabled):active {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: #fff !important;
+}
+.page-item.active .page-link {
+    background-color: #198754 !important;
+    border-color: #198754 !important;
+    color: #fff !important;
+}
+.page-link {
+    color: #198754;
+}
+.page-link:hover {
+    color: #146c43;
+    border-color: #198754;
+}
+.text-primary { color: #198754 !important; }
+.border-primary { border-color: #198754 !important; }
+.bg-primary { background-color: #198754 !important; }
+
+/* 3 produits par rangée sur la boutique */
+main .row > .col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+}
+
+main .card-product-grid {
+    height: 100%;
+}
+
+main .card-product-grid .img-wrap {
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+main .card-product-grid .img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@media (max-width: 767.98px) {
+    main .row > .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+</style>
+
+
+<style id="tbs-all-product-images-uniform">
+/* Toutes les images des produits ont exactement la même zone d'affichage */
+main .card-product-grid .img-wrap,
+main .card-product-grid .img-wrap a {
+    height: 260px !important;
+    min-height: 260px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+}
+
+main .card-product-grid .img-wrap img,
+main .card-product-grid .img-wrap a img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 260px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    display: block !important;
+}
+
+/* Même hauteur de carte pour que les rangées restent bien alignées */
+main .card-product-grid {
+    height: 100% !important;
+}
+</style>
+
+
+<style id="tbs-pagination-style">
+/* Pagination de la boutique : 9 produits par page */
+#tbsPagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 25px;
+}
+#tbsPagination button {
+  min-width: 38px;
+  height: 38px;
+  border: 1px solid #198754;
+  background: #fff;
+  color: #198754;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#tbsPagination button:hover,
+#tbsPagination button.active {
+  background: #198754;
+  color: #fff;
+}
+#tbsPagination button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+</style>
+
+
+<style id="tbs-store-frontend-v1">
+/* ===== T.B.S. FRONT-END — BOUTIQUE ===== */
+:root{
+  --tbs-green:#198754;
+  --tbs-dark:#0c5e3f;
+  --tbs-light:#f5faf7;
+}
+body{background:#fff;color:#26332d}
+.header-main{background:#fff}
+.brand-wrap{text-decoration:none!important;letter-spacing:.5px}
+.category-wrap .btn{border-radius:8px;font-weight:600}
+.dropdown-menu{
+  border:0;border-radius:10px;
+  box-shadow:0 8px 25px rgba(0,0,0,.10);
+  padding:8px 0;
+}
+.dropdown-item{padding:10px 18px}
+.search .form-control{min-height:44px;border-radius:8px 0 0 8px}
+.search .btn{min-height:44px;min-width:48px;border-radius:0 8px 8px 0}
+.widget-header .title{display:block;margin-bottom:3px}
+.widget-header a{font-weight:600}
+
+.section-pagetop{
+  background:var(--tbs-light)!important;
+  padding:34px 0!important;
+  border-bottom:1px solid #e7eee9;
+}
+.title-page{color:var(--tbs-dark);font-weight:700}
+
+.section-content{background:#fff}
+.section-content aside .card{
+  border:1px solid #e5ece8;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 3px 14px rgba(0,0,0,.04);
+}
+.filter-group+.filter-group{border-top:1px solid #edf1ef}
+.card-header{background:#fff}
+.filter-group .title{font-weight:700;color:var(--tbs-dark)}
+.list-menu li a{transition:color .2s ease}
+.checkbox-btn .btn{
+  border-radius:7px;
+  margin-bottom:6px;
+}
+.section-content main>header{
+  padding-bottom:14px!important;
+}
+.section-content main>header span{
+  font-size:20px;
+  font-weight:700;
+  color:var(--tbs-dark);
+}
+
+main .card-product-grid{
+  height:100%!important;
+  border:1px solid #e5ece8!important;
+  border-radius:12px!important;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 3px 14px rgba(0,0,0,.045);
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+main .card-product-grid:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 25px rgba(0,0,0,.10);
+}
+main .card-product-grid .img-wrap{
+  height:240px!important;
+  min-height:240px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  background:#fff;
+}
+main .card-product-grid .img-wrap img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  padding:12px;
+  transition:transform .3s ease;
+}
+main .card-product-grid:hover .img-wrap img{transform:scale(1.04)}
+main .card-product-grid .info-wrap{padding:16px}
+main .card-product-grid .title{
+  color:#26332d;
+  font-weight:700;
+  font-size:16px;
+}
+main .card-product-grid .price{
+  color:var(--tbs-green);
+  font-size:18px;
+  font-weight:700;
+}
+main .card-product-grid .text-muted{font-size:13px}
+main .card-product-grid .btn{
+  border-radius:7px;
+  font-weight:600;
+}
+.pagination .page-link{border-radius:6px!important;margin:0 2px}
+.section-footer{
+  background:#fff;
+  margin-top:20px;
+}
+.section-footer a{font-weight:500}
+
+@media(max-width:767.98px){
+  .header-main .row{row-gap:12px}
+  .section-pagetop{padding:25px 0!important}
+  .title-page{font-size:25px}
+  .section-content aside{margin-bottom:20px}
+  main .card-product-grid .img-wrap{
+    height:210px!important;
+    min-height:210px!important;
+  }
+  main .card-product-grid .img-wrap img{padding:10px}
+  .section-content main>header span{font-size:18px}
+  .section-footer{text-align:center}
+}
+</style>
+
+</head>
+<body>
+
+
+<header class="section-header">
+<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+<div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTop4">
+    <ul class="navbar-nav mr-auto">
+    	<li class="nav-item dropdown">
+		 	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="languageBtn">Français</a>
+<ul class="dropdown-menu small">
+    <li><a class="dropdown-item language-option" href="#" data-language="fr">Français</a></li>
+    <li><a class="dropdown-item language-option" href="#" data-language="en">English</a></li>
+</ul>
+		</li>
+		<li class="nav-item dropdown">
+			<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="currencyBtn">FCFA</a>
+<ul class="dropdown-menu small">
+    <li><a class="dropdown-item currency-option" href="#" data-currency="FCFA">FCFA</a></li>
+    <li><a class="dropdown-item currency-option" href="#" data-currency="USD">USD</a></li>
+</ul>
+		</li>
+    </ul>
+    <ul class="navbar-nav">
+		<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i>aziz.fall@live.fr </a></li>
+		<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i>+221 77 174 74 87</a></li>
+	</ul> <!-- list-inline //  -->
+  </div> <!-- navbar-collapse .// -->
+</div> <!-- container //  -->
+</nav>
+
+<section class="header-main border-bottom">
+	<div class="container">
+<div class="row align-items-center">
+	<div class="col-lg-2 col-md-3 col-6">
+		<a href="./" class="brand-wrap" style="font-size: 30px;">
+			<!-- <img class="logo" src="./images/logo.png"> -->
+			<span style="color: rgb(10, 105, 82); font-weight: bold;">T.B.<span style="color: rgb(10, 105, 82); font-weight: bold;">S</span>
+		</a> <!-- brand-wrap.// -->
+	</div>
+	<div class="col-lg col-sm col-md col-6 flex-grow-0">
+		<div class="category-wrap dropdown d-inline-block float-right">
+			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+				<i class="fa fa-bars"></i> Toutes les catégories
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="#">Céréales </a>
+				<a class="dropdown-item" href="#">Fruits & Légumes </a>
+				<a class="dropdown-item" href="#">Confitures</a>
+				<a class="dropdown-item" href="#">Produits transformés </a>
+				<a class="dropdown-item" href="#">Farines infantiles </a>
+				<a class="dropdown-item" href="#">Cosmétiques naturels </a> 
+			</div>
+		</div>  <!-- category-wrap.// -->
+	</div> <!-- col.// -->
+	<a href="./store.html" class="btn btn-outline-primary">Boutique</a>
+	<div class="col-lg  col-md-6 col-sm-12 col">
+		<form action="#" class="search">
+			<div class="input-group w-100">
+			    <input type="text" class="form-control" style="width:60%;" placeholder="Rechercher un produit">
+			    
+			    <div class="input-group-append">
+			      <button class="btn btn-primary" type="submit">
+			        <i class="fa fa-search"></i>
+			      </button>
+			    </div>
+		    </div>
+		</form> <!-- search-wrap .end// -->
+	</div> <!-- col.// -->
+	<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+				<div class="d-flex justify-content-end mb-3 mb-lg-0">
+					<div class="widget-header">
+						<small class="title text-muted">Bienvenue chez Thiossane Business Service!</small>
+						<div> 
+							<a href="./signin.html">Connexion</a> <span class="dark-transp"> | </span>
+							<a href="./register.html"> Inscription</a>
+						</div>
+					</div>
+					<a href="./cart.html" class="widget-header pl-3 ml-3">
+						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+						<span class="badge badge-pill badge-danger notify">0</span>
+					</a>
+				</div> <!-- widgets-wrap.// -->
+			</div> <!-- col.// -->
+</div> <!-- row.// -->
+
+<div id="tbsPagination" aria-label="Pagination des produits"></div>
+
+	</div> <!-- container.// -->
+</section> <!-- header-main .// -->
+
+
+
+</header> <!-- section-header.// -->
+
+
+
+<!-- ========================= SECTION PAGETOP ========================= -->
+<section class="section-pagetop bg">
+<div class="container">
+	<h2 class="title-page">Notre Boutique</h2>
+	
+</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION INTRO END// ========================= -->
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+<div class="container">
+
+<div class="row">
+	<aside class="col-md-3">
+		
+<div class="card">
+	<article class="filter-group">
+		<header class="card-header">
+			<a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true" class="">
+				<i class="icon-control fa fa-chevron-down"></i>
+				<h6 class="title">Categories</h6>
+			</a>
+		</header>
+		<div class="filter-content collapse show" id="collapse_1">
+			<div class="card-body">
+				
+				<ul class="list-menu">
+				<li><a href="#">Céréales </a></li>
+				<li><a href="#">Fruits & Légumes</a></li>
+				<li><a href="#">Confitures </a></li>
+				<li><a href="#">Produits transformés </a></li>
+				<li><a href="#">Farines infantiles </a></li>
+				<li><a href="#">Cosmétiques naturels</a></li>
+				</ul>
+
+			</div> <!-- card-body.// -->
+		</div>
+	</article> <!-- filter-group  .// -->
+	<article class="filter-group">
+		<header class="card-header">
+			<a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true" class="">
+				<i class="icon-control fa fa-chevron-down"></i>
+				<h6 class="title">Formats </h6>
+			</a>
+		</header>
+		<div class="filter-content collapse show" id="collapse_4" >
+			<div class="card-body">
+			  <label class="checkbox-btn">
+			    <input type="checkbox">
+			    <span class="btn btn-light"> 250g </span>
+			  </label>
+
+			  <label class="checkbox-btn">
+			    <input type="checkbox">
+			    <span class="btn btn-light"> 500g </span>
+			  </label>
+
+			  <label class="checkbox-btn">
+			    <input type="checkbox">
+			    <span class="btn btn-light"> 1 Kg </span>
+			  </label>
+
+			  <label class="checkbox-btn">
+			    <input type="checkbox">
+			    <span class="btn btn-light"> 2 Kg </span>
+			  </label>
+		</div><!-- card-body.// -->
+		</div>
+	</article> <!-- filter-group .// -->
+	
+	<article class="filter-group">
+		<header class="card-header">
+			<a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true" class="">
+				<i class="icon-control fa fa-chevron-down"></i>
+				<h6 class="title">Gamme de prix </h6>
+			</a>
+		</header>
+		<div class="filter-content collapse show" id="collapse_3">
+			<div class="card-body">
+				
+				<div class="form-row">
+				<div class="form-group col-md-6">
+				  <label>Minimum</label>
+				  <!-- <input class="form-control" placeholder="$0" type="number"> -->
+				  	<select class="mr-2 form-control">
+						<option value="0">0 F</option>
+						<option value="50">1000 F</option>
+						<option value="100">2500 F</option>
+						<option value="150">5000 F</option>
+						<option value="200">10000 F</option>
+						<option value="500">15000 F</option>
+						<option value="1000">20000 F</option>
+					</select>
+				</div>
+				<div class="form-group text-right col-md-6">
+				  <label>Maximum</label>
+				  	<select class="mr-2 form-control">
+						<option value="50">5000 F</option>
+						<option value="100">10000 F</option>
+						<option value="150">15000 F</option>
+						<option value="200">20000 F</option>
+						<option value="500">25000 F</option>
+						<option value="1000">30000 F</option>
+						<option value="2000">40000F</option>
+					</select>
+				</div>
+				</div> <!-- form-row.// -->
+				<button class="btn btn-block btn-primary">Filtrer</button>
+			</div><!-- card-body.// -->
+		</div>
+	</article> <!-- filter-group .// -->
+	
+</div> <!-- card.// -->
+
+	</aside> <!-- col.// -->
+	<main class="col-md-9">
+
+<header class="border-bottom mb-4 pb-3">
+		<div class="form-inline">
+			<span class="mr-md-auto">Nos produits </span>
+			
+		</div>
+</header><!-- sect-heading -->
+
+<div class="row">
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				
+				<img src="images/items/Thiéré sans lalo.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=thiere" class="title">Thiéré Sans lalo</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+					<div class="price-wrap mt-2">
+						<span class="price">800f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#" data-cart-product="thiere" class="btn btn-block btn-primary">Ajouter au panier </a>
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+
+	 <div class="col-md-4" data-category="cereales">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Araw de mil.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=araw" class="title">Araw de Mil</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+					<div class="price-wrap mt-2">
+						<span class="price">800f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#Araw " data-cart-product="araw" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Poudre de niébé.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=niebe" class="title">Poudre de niébé</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+<div class="price-wrap mt-2">
+						<span class="price">5000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#niebe" data-cart-product="niebe" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Poudre de bissap1.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=bissap1" class="title">Poudre de bissap</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+<div class="price-wrap mt-2">
+						<span class="price">5000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#bissap1" data-cart-product="bissap1" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Sirop Maad.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=maad" class="title">Sirop Maad</a>
+					<div class="price-wrap mt-2">
+						<span class="price">3000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#maad" data-cart-product="maad" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Poudre de bouye.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=bouye" class="title"> Poudre de Bouye</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+<div class="price-wrap mt-2">
+						<span class="price">5000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#bouye" data-cart-product="bouye" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Confiture bissap.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=confiture_bissap" class="title">Confiture bissap</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#confiture_bissap" data-cart-product="confiture_bissap" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Ngourbane.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=ngourbane" class="title"> Ngourbane</a>
+					<div class="price-wrap mt-2">
+						<span class="price">3000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#ngourbane" data-cart-product="mangue" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Beure de mangue.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=mangue" class="title"> Beure de mangue</a>
+					<div class="price-wrap mt-2">
+						<span class="price">5000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#mangue" data-cart-product="ngourbane" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Dakandé werak.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=werak" class="title"> Dakandé werak</a>
+					<div class="price-wrap mt-2">
+						<span class="price">3000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#werak" data-cart-product="werak" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Graine de chia.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=chia" class="title"> Graine de chia</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#chia" data-cart-product="chia" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Graine de courge.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=courge" class="title"> Graine de courge</a>
+					<div class="price-wrap mt-2">
+						<span class="price">4000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#courge" data-cart-product="courge" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Graine de funigrec.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=funigrec" class="title"> Graine de fenugrec</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#funigrec" data-cart-product="fenugrec" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Graine de lin.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=lin" class="title"> Graine de lin</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2500f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#lin" data-cart-product="lin" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Poudre de citron.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=citron" class="title"> Poudre de citron</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+<div class="price-wrap mt-2">
+						<span class="price">5000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#citon" data-cart-product="citron" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Poudre de neem.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=neem" class="title"> Poudre de Neem</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+<div class="price-wrap mt-2">
+						<span class="price">5000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#neem" data-cart-product="neem" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Huile touloucouna.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=touloucouna" class="title"> Huile de touloucouna </a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#touloucouna" data-cart-product="touloucouna" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Huille de coco.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=coco" class="title"> Huile coco</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#coco" data-cart-product="coco" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Huile de kigelia.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=kigelia" class="title"> Huile de kigelia</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#kigelia" data-cart-product="kigelia" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Feuille de sana maki.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=sanamaki" class="title"> Feuille de sana maki</a>
+					<div class="price-wrap mt-2">
+						<span class="price">3000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#sanamaki" data-cart-product="sanamaki" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Poudre de moringa.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=moringa" class="title"> Poudre de moringa</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+<div class="price-wrap mt-2">
+						<span class="price">5000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#moringa" data-cart-product="moringa" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Savon mbeurbeuf.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=mbeurbeuf" class="title"> Savon mbeurbeuf</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#mbeurbeuf" data-cart-product="mbeurbeuf" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Savon mélangé.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=melange" class="title"> Savon mélangé</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#melange" data-cart-product="melange" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Savon moringo.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=moringo" class="title"> Savon moringa</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#moringo" data-cart-product="moringo" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Savon neem.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=neem" class="title"> Savon neem</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#neem" data-cart-product="neem" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Savon laurier.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=laurier" class="title"> Savon laurier</a>
+					<div class="price-wrap mt-2">
+						<span class="price">2000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#laurier" data-cart-product="laurier" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"> 
+				<img src="images/items/Poudre petit cola.jpeg">
+				
+			</div> <!-- img-wrap.// -->
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=petitcola" class="title"> Poudre petit cola</a>
+					<div class="text-muted mt-1">500 g • 1 Kg • 2 Kg • 5 Kg</div>
+<div class="price-wrap mt-2">
+						<span class="price">5000f</span>
+					</div> <!-- price-wrap.// -->
+				</div>
+				<a href="#peticola" data-cart-product="petitcola" class="btn btn-block btn-primary">Ajouter au panier </a>	
+			</figcaption>
+		</figure>
+	</div> <!-- col.// -->
+
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"><img src="images/items/Pnier ndougou.jpeg" alt="Panier Ndougou"></div>
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=panier_ndougou" class="title">Panier Ndougou</a>
+					<div class="text-muted mt-1">Petit : 3 000 F • Moyen : 5 000 F • Grand : 10 000 F</div>
+					<div class="price-wrap mt-2"><span class="price">3 000f</span></div>
+				</div>
+				<a href="#panier_ndougou" data-cart-product="panier_ndougou" class="btn btn-block btn-primary">Ajouter au panier </a>
+			</figcaption>
+		</figure>
+	</div>
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"><img src="images/items/Pudre de coctus indien.jpeg" alt="Poudre de Cactus Indien"></div>
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=cactus_indien" class="title">Poudre de Cactus Indien</a>
+					<div class="text-muted mt-1">500 g • 1 Kg</div>
+					<div class="price-wrap mt-2"><span class="price">5000f</span></div>
+				</div>
+				<a href="#cactus_indien" data-cart-product="cactus_indien" class="btn btn-block btn-primary">Ajouter au panier </a>
+			</figcaption>
+		</figure>
+	</div>
+	<div class="col-md-4">
+		<figure class="card card-product-grid">
+			<div class="img-wrap"><img src="images/items/Graine de cresson.jpeg" alt="Graine de cresson"></div>
+			<figcaption class="info-wrap">
+				<div class="fix-height">
+					<a href="./product-detail.html?produit=cresson" class="title">Graine de cresson</a>
+					<div class="text-muted mt-1">100 g • 500 g</div>
+					<div class="price-wrap mt-2"><span class="price">2000f</span></div>
+				</div>
+				<a href="#cresson" data-cart-product="cresson" class="btn btn-block btn-primary">Ajouter au panier </a>
+			</figcaption>
+		</figure>
+	</div>
+</div> <!-- row end.// -->
+
+
+<nav class="mt-4" aria-label="Page navigation sample">
+  <ul class="pagination">
+    <li class="page-item disabled"><a class="page-link" href="#">Précédent</a></li>
+    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Suivant</a></li>
+  </ul>
+</nav>
+
+	</main> <!-- col.// -->
+
+</div>
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<!-- ========================= FOOTER ========================= -->
+<footer class="section-footer border-top padding-y">
+	<div class="container">
+		<p class="float-md-right"> 
+			&copy 2026 THIOSSANE BUSINESS SERVICE. Tous droits réservés.
+		</p>
+		<p>
+			<a href="#">Conditions générales</a>
+		</p>
+	</div><!-- //container -->
+</footer>
+<!-- ========================= FOOTER END // ========================= -->
+
+
+
+
+<style id="tbs-cart-remove-style">
+.tbs-retirer-panier {
+  margin-top: 6px;
+  color: #dc3545 !important;
+  border: 1px solid #dc3545 !important;
+  background: #fff !important;
+}
+.tbs-retirer-panier:hover {
+  color: #fff !important;
+  background: #dc3545 !important;
+}
+</style>
+
+<script>
+(function () {
+  const KEY = "tbs_cart_v3";
+  const produits = {
+    thiere: {nom:"Thiéré sans lalo", image:"./images/items/Thiéré sans lalo.jpeg", prix:800, format:"500 g", description:"Produit traditionnel"},
+    araw: {nom:"Araw de Mil", image:"./images/items/Araw de mil.jpeg", prix:800, format:"500 g", description:"Produit à base de mil"},
+    niebe: {nom:"Poudre de niébé", image:"./images/items/Poudre de niébé.jpeg", prix:5000, format:"500 g", description:"Produit naturel"},
+    bissap1: {nom:"Poudre de bissap", image:"./images/items/Poudre de bissap1.jpeg", prix:5000, format:"500 g", description:"Produit naturel"},
+    maad: {nom:"Sirop Maad", image:"./images/items/Sirop Maad.jpeg", prix:3000, format:"1 L", description:"Sirop naturel"},
+    bouye: {nom:"Poudre de Bouye", image:"./images/items/Poudre de bouye.jpeg", prix:5000, format:"500 g", description:"Produit naturel"},
+    confiture_bissap: {nom:"Confiture bissap", image:"./images/items/Confiture bissap.jpeg", prix:2000, format:"250 g", description:"Confiture artisanale"},
+    ngourbane: {nom:"Ngourbane", image:"./images/items/Ngourbane.jpeg", prix:3000, format:"500 g", description:"Produit naturel"}
+  };
+
+  function cart(){
+    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+    catch(e) { return []; }
+  }
+
+  function save(c){
+    localStorage.setItem(KEY, JSON.stringify(c));
+    badge(c);
+    updateRemoveButtons(c);
+  }
+
+  function badge(c){
+    const n=c.reduce((a,i)=>a+(Number(i.quantite)||0),0);
+    document.querySelectorAll('.notify').forEach(x=>x.textContent=n);
+  }
+
+  function updateRemoveButtons(c){
+    document.querySelectorAll('.ajouter-panier[data-cart-product]').forEach(function(btn){
+      const id=btn.getAttribute('data-cart-product');
+      const p=produits[id];
+      if(!p) return;
+
+      const key=id+'|'+p.format;
+      const selected=c.some(function(i){ return i.key===key; });
+
+      let remove=btn.parentElement.querySelector('.tbs-retirer-panier[data-remove-product="'+id+'"]');
+
+      if(selected && !remove){
+        remove=document.createElement('button');
+        remove.type='button';
+        remove.className='btn btn-sm btn-block tbs-retirer-panier';
+        remove.setAttribute('data-remove-product', id);
+        remove.textContent='Retirer du panier';
+        btn.parentElement.appendChild(remove);
+
+        remove.addEventListener('click',function(){
+          const current=cart();
+          const updated=current.filter(function(i){ return i.key!==key; });
+          save(updated);
+        });
+      }
+
+      if(!selected && remove) remove.remove();
+    });
+  }
+
+  document.querySelectorAll('.ajouter-panier[data-cart-product]').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+
+      const id=this.getAttribute('data-cart-product');
+      const p=produits[id];
+      if(!p) return;
+
+      const c=cart();
+      const key=id+'|'+p.format;
+      const x=c.find(function(i){ return i.key===key; });
+
+      if(x) {
+        x.quantite=(Number(x.quantite)||0)+1;
+      } else {
+        c.push({
+          key:key, id:id, nom:p.nom, image:p.image, prix:p.prix,
+          format:p.format, description:p.description, quantite:1
+        });
+      }
+
+      save(c);
+
+      const old=this.innerHTML;
+      this.innerHTML='Ajouté au panier';
+      setTimeout(()=>this.innerHTML=old,1000);
+    });
+  });
+
+  badge(cart());
+  updateRemoveButtons(cart());
+})();
+</script>
+
+<script id="tbs-pagination-search-script">
+(function () {
+
+    const PRODUCTS_PER_PAGE = 6;
+
+    function init() {
+
+        const main = document.querySelector("main");
+        if (!main) return;
+
+        const row = main.querySelector(".row");
+        if (!row) return;
+
+        const items = Array.from(row.children).filter(function (el) {
+            return el.querySelector(".card-product-grid");
+        });
+
+        const nav = main.querySelector("nav[aria-label='Page navigation sample']");
+        const searchInput = document.querySelector(".search input");
+
+        if (!items.length || !nav || !searchInput) return;
+
+        let page = 1;
+        let filteredItems = items;
+
+        function render(p) {
+
+            const totalPages = Math.max(
+                1,
+                Math.ceil(filteredItems.length / PRODUCTS_PER_PAGE)
+            );
+
+            if (p > totalPages) p = totalPages;
+            if (p < 1) p = 1;
+
+            page = p;
+
+            /* Afficher uniquement les produits de la page */
+            items.forEach(function (item) {
+                item.style.display = "none";
+            });
+
+            filteredItems.forEach(function (item, index) {
+
+                if (
+                    index >= (page - 1) * PRODUCTS_PER_PAGE &&
+                    index < page * PRODUCTS_PER_PAGE
+                ) {
+                    item.style.display = "";
+                }
+
+            });
+
+            /* Recréer la pagination */
+            const ul = nav.querySelector(".pagination");
+            ul.innerHTML = "";
+
+            function add(text, target, disabled, active) {
+
+                const li = document.createElement("li");
+
+                li.className =
+                    "page-item" +
+                    (disabled ? " disabled" : "") +
+                    (active ? " active" : "");
+
+                const a = document.createElement("a");
+
+                a.className = "page-link";
+                a.href = "#";
+                a.textContent = text;
+
+                if (!disabled) {
+
+                    a.onclick = function (e) {
+
+                        e.preventDefault();
+
+                        render(target);
+
+                        window.scrollTo({
+                            top: main.offsetTop - 80,
+                            behavior: "smooth"
+                        });
+
+                    };
+
+                }
+
+                li.appendChild(a);
+                ul.appendChild(li);
+            }
+
+            add("Précédent", page - 1, page === 1, false);
+
+            for (let i = 1; i <= totalPages; i++) {
+                add(
+                    String(i),
+                    i,
+                    false,
+                    i === page
+                );
+            }
+
+            add(
+                "Suivant",
+                page + 1,
+                page === totalPages,
+                false
+            );
+        }
+
+
+        /* =========================
+           RECHERCHE AUTOMATIQUE
+           ========================= */
+
+        searchInput.addEventListener("input", function () {
+
+            const recherche = this.value
+                .toLowerCase()
+                .trim();
+
+            if (recherche === "") {
+
+                filteredItems = items;
+
+            } else {
+
+                filteredItems = items.filter(function (item) {
+
+                    const texte = item.textContent
+                        .toLowerCase();
+
+                    return texte.includes(recherche);
+
+                });
+
+            }
+
+            /* Retour à la première page */
+            render(1);
+
+        });
+
+
+        /* =========================
+           BOUTON RECHERCHE
+           ========================= */
+
+        const searchForm = document.querySelector(".search");
+
+        if (searchForm) {
+
+            searchForm.addEventListener("submit", function (e) {
+
+                e.preventDefault();
+
+                searchInput.dispatchEvent(
+                    new Event("input")
+                );
+
+            });
+
+        }
+
+
+        /* Affichage initial */
+        render(1);
+
+    }
+
+
+    if (document.readyState === "loading") {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            init
+        );
+
+    } else {
+
+        init();
+
+    }
+
+})();
+</script>
+
+</body>
+</html>

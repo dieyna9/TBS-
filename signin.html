@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="max-age=604800" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>T.B.S. | One of the Biggest Online Shopping Platform</title>
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script src="js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+<!-- Font awesome 5 -->
+<link href="fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet">
+
+<!-- custom style -->
+<link href="css/ui.css" rel="stylesheet" type="text/css"/>
+<link href="css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+
+<!-- custom javascript -->
+<script src="js/script.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+/// some script
+
+// jquery ready start
+$(document).ready(function() {
+	// jQuery code
+
+}); 
+// jquery end
+</script>
+
+
+<style id="tbs-global-theme">
+:root{--tbs-green:#198754;--tbs-dark:#146c43;--tbs-yellow:#f2c94c;}
+.btn-primary,.btn-primary:hover,.btn-primary:focus,.btn-primary:active{
+ background-color:var(--tbs-green)!important;border-color:var(--tbs-green)!important;color:#fff!important;
+}
+.btn-outline-primary{color:var(--tbs-green)!important;border-color:var(--tbs-green)!important;}
+.btn-outline-primary:hover,.btn-outline-primary:focus,.btn-outline-primary:active{
+ background-color:var(--tbs-green)!important;border-color:var(--tbs-green)!important;color:#fff!important;
+}
+.text-primary{color:var(--tbs-green)!important;}
+.bg-primary{background-color:var(--tbs-green)!important;}
+.border-primary{border-color:var(--tbs-green)!important;}
+.page-link{color:var(--tbs-green)!important;}
+.page-item.active .page-link{background-color:var(--tbs-green)!important;border-color:var(--tbs-green)!important;color:#fff!important;}
+a:hover{color:var(--tbs-green)!important;}
+</style>
+
+
+<style id="tbs-signin-frontend">
+:root{--tbs-green:#198754;--tbs-dark:#146c43;--tbs-border:#e3ebe6;}
+body{background:#f7f9f8;color:#212529;}
+.header-main{background:#fff;}
+.tbs-brand{letter-spacing:.3px;}
+.section-conten{background:linear-gradient(180deg,#f7fbf8 0,#fff 100%);}
+.login-card{
+  border:1px solid var(--tbs-border)!important;
+  border-radius:18px!important;
+  box-shadow:0 10px 35px rgba(20,70,45,.08);
+  overflow:hidden;
+}
+.login-card .card-body{padding:30px;}
+.login-title{font-weight:800;color:#173b2b;}
+.form-control{
+  min-height:46px;border-radius:10px;border:1px solid #d7e1db;
+}
+.form-control:focus{
+  border-color:var(--tbs-green);
+  box-shadow:0 0 0 .18rem rgba(25,135,84,.12);
+}
+.btn-primary{
+  background:var(--tbs-green)!important;
+  border-color:var(--tbs-green)!important;
+  border-radius:10px;min-height:46px;font-weight:650;
+}
+.btn-primary:hover{background:var(--tbs-dark)!important;border-color:var(--tbs-dark)!important;}
+.login-icon{
+  width:58px;height:58px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:#eaf7ef;color:var(--tbs-green);font-size:24px;
+  margin:0 auto 16px;
+}
+.forgot-link{font-size:13px;}
+.register-link{font-weight:600;color:var(--tbs-green);}
+.footer-clean{background:#fff;}
+@media(max-width:767.98px){
+  .login-card{margin-top:45px!important;}
+  .login-card .card-body{padding:22px;}
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+
+</head>
+<body>
+
+
+<header class="section-header">
+<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+<div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTop4">
+    <ul class="navbar-nav mr-auto">
+    	<li class="nav-item dropdown">
+		 	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">   Langue </a>
+		    <ul class="dropdown-menu small">
+				<li><a class="dropdown-item" href="#">Français</a></li>
+				<li><a class="dropdown-item" href="#">Arabe</a></li>
+				<li><a class="dropdown-item" href="#">Russe </a></li>
+		    </ul>
+		</li>
+		<li class="nav-item dropdown">
+			<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> FCFA </a>
+			<ul class="dropdown-menu small">
+				
+				
+				
+		    </ul>
+		</li>
+    </ul>
+    <ul class="navbar-nav">
+		<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> E-mail </a></li>
+		<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Appelez-nous </a></li>
+	</ul> <!-- list-inline //  -->
+  </div> <!-- navbar-collapse .// -->
+</div> <!-- container //  -->
+</nav>
+
+<section class="header-main border-bottom">
+	<div class="container">
+<div class="row align-items-center">
+	<div class="col-lg-2 col-md-3 col-6">
+		<a href="./index.html" class="brand-wrap tbs-brand" style="font-size: 30px;">
+			<!-- <img class="logo" src="./images/logo.png"> -->
+			<span style="color:#198754;font-weight:bold;">T.B.S.</span>
+		</a><!-- brand-wrap.// -->
+	</div>
+	<div class="col-lg col-sm col-md col-6 flex-grow-0">
+		<div class="category-wrap dropdown d-inline-block float-right">
+			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+				<i class="fa fa-bars"></i> Toutes les catégories 
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="#">Machinery / Mechanical Parts / Tools </a>
+				<a class="dropdown-item" href="#">Consumer Electronics / Home Appliances </a>
+				<a class="dropdown-item" href="#">Auto / Transportation</a>
+				<a class="dropdown-item" href="#">Apparel / Textiles / Timepieces </a>
+				<a class="dropdown-item" href="#">Home & Garden / Construction / Lights </a>
+				<a class="dropdown-item" href="#">Beauty & Personal Care / Health </a> 
+			</div>
+		</div>  <!-- category-wrap.// -->
+	</div> <!-- col.// -->
+	<a href="./store.html" class="btn btn-outline-primary">Boutique</a>
+	<div class="col-lg  col-md-6 col-sm-12 col">
+		<form action="#" class="search">
+			<div class="input-group w-100">
+			    <input type="text" class="form-control" style="width:60%;" placeholder="Rechercher">
+			    
+			    <div class="input-group-append">
+			      <button class="btn btn-primary" type="submit">
+			        <i class="fa fa-search"></i>
+			      </button>
+			    </div>
+		    </div>
+		</form> <!-- search-wrap .end// -->
+	</div> <!-- col.// -->
+	<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+				<div class="d-flex justify-content-end mb-3 mb-lg-0">
+					<div class="widget-header">
+						<small class="title text-muted">Bienvenue chez Thiossane Business Service !</small>
+						<div> 
+							<a href="./signin.html">Connexion</a> <span class="dark-transp"> | </span>
+							<a href="./register.html"> Inscription</a>
+						</div>
+					</div>
+					<a href="./cart.html" class="widget-header pl-3 ml-3">
+						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+						<span class="badge badge-pill badge-danger notify">0</span>
+					</a>
+				</div> <!-- widgets-wrap.// -->
+			</div> <!-- col.// -->
+</div> <!-- row.// -->
+	</div> <!-- container.// -->
+</section> <!-- header-main .// -->
+
+
+
+</header> <!-- section-header.// -->
+
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten padding-y" style="min-height:84vh">
+
+<!-- ============================ COMPONENT LOGIN   ================================= -->
+	<div class="card mx-auto login-card" style="max-width: 420px; margin-top:80px;">
+      <div class="card-body">
+      <div class="login-icon"><i class="fa fa-user"></i></div><h4 class="card-title mb-4 text-center login-title">Connexion</h4>
+      <form id="signinForm">
+          <div class="form-group">
+			 <input id="signinEmail" type="email" class="form-control" placeholder="Adresse e-mail" required autocomplete="email">
+          </div> <!-- form-group// -->
+          <div class="form-group">
+			<input id="signinPassword" type="password" class="form-control" placeholder="Mot de passe" required autocomplete="current-password">
+          </div> <!-- form-group// -->
+          
+          <div class="form-group">
+          	<a href="#" id="forgotPassword" class="float-right forgot-link">Mot de passe oublié ?</a> 
+           
+          </div> <!-- form-group form-check .// -->
+          <div class="form-group">
+              <button id="signinButton" type="submit" class="btn btn-primary btn-block"> Se connecter </button>
+          </div> <!-- form-group// -->    
+      </form>
+      </div> <!-- card-body.// -->
+    </div> <!-- card .// -->
+
+     <p class="text-center mt-4">Vous n'avez pas encore de compte ? <a class="register-link" href="./register.html">Inscription</a></p>
+     <br><br>
+<!-- ============================ COMPONENT LOGIN  END.// ================================= -->
+
+
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+<!-- ========================= FOOTER ========================= -->
+<footer class="section-footer border-top padding-y footer-clean">
+	<div class="container">
+		<p class="float-md-right"> 
+			&copy; 2026 THIOSSANE BUSINESS SERVICE. Tous droits réservés
+		</p>
+		<p>
+			<a href="#">Conditions générales</a>
+		</p>
+	</div><!-- //container -->
+</footer>
+<!-- ========================= FOOTER END // ========================= -->
+
+
+
+
+<script>
+(function () {
+  const form = document.getElementById("signinForm");
+  const emailInput = document.getElementById("signinEmail");
+  const passwordInput = document.getElementById("signinPassword");
+  const button = document.getElementById("signinButton");
+  const forgotLink = document.getElementById("forgotPassword");
+
+  function showMessage(message, ok) {
+    let box = document.getElementById("signinMessage");
+    if (!box) {
+      box = document.createElement("div");
+      box.id = "signinMessage";
+      box.style.marginTop = "12px";
+      box.style.fontSize = "14px";
+      form.appendChild(box);
+    }
+    box.textContent = message;
+    box.style.color = ok ? "#198754" : "#dc3545";
+  }
+
+  if (!window.supabase ||
+      typeof SUPABASE_URL === "undefined" ||
+      typeof SUPABASE_PUBLISHABLE_KEY === "undefined" ||
+      SUPABASE_PUBLISHABLE_KEY === "COLLE_ICI_TA_PUBLISHABLE_KEY") {
+    showMessage("Configuration Supabase introuvable. Vérifiez supabase-config.js.", false);
+    return;
+  }
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      showMessage("Veuillez remplir votre e-mail et votre mot de passe.", false);
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Connexion...";
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password
+    });
+
+    if (error) {
+      showMessage(error.message === "Invalid login credentials"
+        ? "E-mail ou mot de passe incorrect."
+        : error.message, false);
+      button.disabled = false;
+      button.textContent = "Se connecter";
+      return;
+    }
+
+    if (data && data.session) {
+      showMessage("Connexion réussie. Redirection...", true);
+      window.location.href = "./dashboard.html";
+    }
+  });
+
+  forgotLink.addEventListener("click", async function (event) {
+    event.preventDefault();
+
+    const email = emailInput.value.trim();
+    if (!email) {
+      showMessage("Entrez votre adresse e-mail pour recevoir le lien de réinitialisation.", false);
+      emailInput.focus();
+      return;
+    }
+
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + "/signin.html"
+    });
+
+    if (error) {
+      showMessage(error.message, false);
+      return;
+    }
+
+    showMessage("Un e-mail de réinitialisation a été envoyé.", true);
+  });
+})();
+</script>
+
+</body>
+</html>

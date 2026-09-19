@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>T.B.S. | Mon compte</title>
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<link href="js/bootstrap.bundle.min.js" rel="preload" as="script">
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="fonts/fontawesome/css/all.min.css" rel="stylesheet">
+<link href="css/ui.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+
+<style>
+body{background:#f6f8f6;color:#26332b}
+.tbs-header{background:#fff;border-bottom:1px solid #e7ece8}
+.brand-tbs{font-size:30px;font-weight:800;color:#198754}
+.page-title{padding:38px 0 24px}
+.account-card,.order-card,.side-card{background:#fff;border:0;border-radius:16px;box-shadow:0 5px 24px rgba(25,135,84,.08)}
+.account-card{padding:28px}
+.side-card{overflow:hidden}
+.side-card a{display:block;padding:15px 20px;color:#34423a;border-bottom:1px solid #edf1ee;text-decoration:none}
+.side-card a:hover,.side-card a.active{background:#eaf7ef;color:#198754;font-weight:600}
+.side-card a:last-child{border-bottom:0}
+.order-card{padding:24px;margin-bottom:20px}
+.order-badge{display:inline-block;background:#fff3cd;color:#856404;border-radius:20px;padding:5px 12px;font-size:13px;font-weight:600}
+.empty-box{text-align:center;padding:45px 20px;color:#6c757d}
+.btn-tbs{background:#198754;color:#fff;border-radius:9px;font-weight:600}
+.btn-tbs:hover{background:#157347;color:#fff}
+.footer-clean{background:#fff;margin-top:40px}
+@media(max-width:767px){
+ .page-title{padding:25px 0 18px}
+ .account-card,.order-card{padding:20px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="tbs-header">
+<section class="header-main py-3">
+<div class="container">
+<div class="d-flex align-items-center justify-content-between flex-wrap">
+<a href="./index.html" class="brand-tbs text-decoration-none">T.B.S.</a>
+<div class="d-flex align-items-center mt-2 mt-md-0">
+<a href="./store.html" class="btn btn-outline-success mr-2"><i class="fa fa-store mr-1"></i> Boutique</a>
+<a href="./cart.html" class="btn btn-outline-success"><i class="fa fa-shopping-cart mr-1"></i> Panier</a>
+</div>
+</div>
+</div>
+</section>
+</header>
+
+<section class="page-title">
+<div class="container">
+<h1 class="h2 mb-1">Mon compte</h1>
+<p class="text-muted mb-0">Gérez votre compte et consultez vos commandes T.B.S.</p>
+</div>
+</section>
+
+<section class="pb-4">
+<div class="container">
+<div class="row">
+
+<aside class="col-lg-3 mb-4">
+<div class="side-card">
+<a class="active" href="#commandes"><i class="fa fa-box mr-2"></i> Mes commandes</a>
+<a href="#profil"><i class="fa fa-user mr-2"></i> Mon profil</a>
+<a href="#suivi"><i class="fa fa-truck mr-2"></i> Suivi des commandes</a>
+<a href="./store.html"><i class="fa fa-store mr-2"></i> Continuer mes achats</a>
+<a href="./signin.html" id="logoutLink"><i class="fa fa-power-off mr-2"></i> Déconnexion</a>
+</div>
+</aside>
+
+<main class="col-lg-9">
+
+<div id="profil" class="account-card mb-4">
+<h3 class="h5 mb-3"><i class="fa fa-user-circle text-success mr-2"></i>Informations du compte</h3>
+<div id="profileInfo" class="text-muted">
+  Chargement de vos informations...
+</div>
+<div id="profileActions" class="mt-3"></div>
+</div>
+
+<div id="commandes" class="order-card">
+<div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+<div>
+<h2 class="h5 mb-1">Historique de mes commandes</h2>
+<p class="text-muted mb-0">Retrouvez ici vos commandes passées.</p>
+</div>
+</div>
+
+<div id="ordersArea"></div>
+</div>
+
+<div id="suivi" class="account-card">
+<h3 class="h5 mb-2"><i class="fa fa-truck text-success mr-2"></i>Suivi des commandes</h3>
+<p class="text-muted mb-0">Le suivi détaillé sera disponible lorsque la gestion des commandes sera connectée au backend T.B.S.</p>
+</div>
+
+</main>
+</div>
+</div>
+</section>
+
+<footer class="section-footer border-top padding-y footer-clean">
+<div class="container">
+<p class="float-md-right mb-0">&copy; 2026 THIOSSANE BUSINESS SERVICE. Tous droits réservés</p>
+<p class="mb-0"><a href="#">Conditions générales</a></p>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+
+<script>
+(function(){
+  const area = document.getElementById("ordersArea");
+  const profileInfo = document.getElementById("profileInfo");
+  const profileActions = document.getElementById("profileActions");
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function(char) {
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[char];
+    });
+  }
+
+  function showError(message) {
+    area.innerHTML =
+      '<div class="alert alert-danger mb-0">' +
+      '<i class="fa fa-exclamation-circle mr-1"></i>' +
+      escapeHtml(message) +
+      '</div>';
+  }
+
+  if (!window.supabase ||
+      typeof SUPABASE_URL === "undefined" ||
+      typeof SUPABASE_PUBLISHABLE_KEY === "undefined" ||
+      SUPABASE_PUBLISHABLE_KEY === "COLLE_ICI_TA_PUBLISHABLE_KEY") {
+    showError("Configuration Supabase introuvable. Vérifiez supabase-config.js.");
+    profileInfo.textContent = "Configuration Supabase introuvable.";
+    return;
+  }
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  async function loadDashboard() {
+    const { data: userData, error: userError } =
+      await supabaseClient.auth.getUser();
+
+    if (userError || !userData || !userData.user) {
+      window.location.href = "./signin.html";
+      return;
+    }
+
+    const user = userData.user;
+
+    const { data: profile, error: profileError } = await supabaseClient
+      .from("profiles")
+      .select("full_name, phone, address, city, country")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (profileError) {
+      console.warn("Profil :", profileError.message);
+    }
+
+    const name =
+      (profile && profile.full_name) ||
+      (user.user_metadata && user.user_metadata.full_name) ||
+      "Client T.B.S.";
+
+    profileInfo.innerHTML =
+      '<strong class="d-block mb-2">' + escapeHtml(name) + '</strong>' +
+      '<div class="small mb-1"><i class="fa fa-envelope mr-2 text-success"></i>' +
+      escapeHtml(user.email || "—") + '</div>' +
+      '<div class="small mb-1"><i class="fa fa-phone mr-2 text-success"></i>' +
+      escapeHtml((profile && profile.phone) || "Téléphone non renseigné") + '</div>' +
+      '<div class="small mb-1"><i class="fa fa-map-marker mr-2 text-success"></i>' +
+      escapeHtml((profile && profile.city) || "Ville non renseignée") + '</div>';
+
+    profileActions.innerHTML =
+      '<a href="./store.html" class="btn btn-tbs mr-2">Continuer mes achats</a>' +
+      '<button type="button" id="dashboardLogout" class="btn btn-outline-danger">Déconnexion</button>';
+
+    document.getElementById("dashboardLogout").addEventListener("click", async function() {
+      this.disabled = true;
+      this.textContent = "Déconnexion...";
+      await supabaseClient.auth.signOut();
+      window.location.href = "./signin.html";
+    });
+
+    const { data: orders, error: ordersError } = await supabaseClient
+      .from("orders")
+      .select("id, order_number, total_fcfa, status, created_at, delivery_city")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (ordersError) {
+      showError("Impossible de charger vos commandes pour le moment.");
+      console.error("Commandes :", ordersError.message);
+      return;
+    }
+
+    if (!orders || !orders.length) {
+      area.innerHTML =
+        '<div class="empty-box">' +
+        '<i class="fa fa-shopping-bag fa-3x mb-3 text-muted"></i>' +
+        '<h3 class="h6">Aucune commande pour le moment</h3>' +
+        '<p class="mb-3">Vos commandes apparaîtront ici après validation.</p>' +
+        '<a href="./store.html" class="btn btn-tbs">Découvrir nos produits</a>' +
+        '</div>';
+      return;
+    }
+
+    const statusLabels = {
+      pending: "En attente",
+      paid: "Payée",
+      processing: "En préparation",
+      shipped: "Expédiée",
+      completed: "Terminée",
+      cancelled: "Annulée"
+    };
+
+    area.innerHTML = orders.map(function(order) {
+      const amount = Number(order.total_fcfa || 0).toLocaleString("fr-FR");
+      const reference = order.order_number || ("Commande #" + order.id);
+      const status = statusLabels[order.status] || order.status || "En attente";
+      const date = order.created_at
+        ? new Date(order.created_at).toLocaleDateString("fr-FR")
+        : "—";
+
+      return '<div class="border rounded p-3 mb-3">' +
+        '<div class="d-flex justify-content-between align-items-center flex-wrap">' +
+        '<div><strong>' + escapeHtml(reference) + '</strong>' +
+        '<div class="small text-muted">Commande du ' + escapeHtml(date) + '</div></div>' +
+        '<span class="order-badge">' + escapeHtml(status) + '</span>' +
+        '</div>' +
+        '<hr>' +
+        '<div class="row">' +
+        '<div class="col-md-4 mb-2"><small class="text-muted d-block">Référence</small><strong>' +
+        escapeHtml(reference) + '</strong></div>' +
+        '<div class="col-md-4 mb-2"><small class="text-muted d-block">Montant</small><strong>' +
+        escapeHtml(amount) + ' FCFA</strong></div>' +
+        '<div class="col-md-4 mb-2"><small class="text-muted d-block">Ville</small><strong>' +
+        escapeHtml(order.delivery_city || "—") + '</strong></div>' +
+        '</div>' +
+        '</div>';
+    }).join("");
+  }
+
+  loadDashboard();
+})();
+</script>
+
+</body>
+</html>

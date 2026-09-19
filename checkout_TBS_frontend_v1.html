@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Finaliser la commande - T.B.S.</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="fonts/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="css/ui.css" rel="stylesheet" type="text/css"/>
+<link href="css/responsive.css" rel="stylesheet" type="text/css"/>
+<style>
+:root{--tbs-green:#198754;--tbs-dark:#146c43;}
+.btn-primary{background:var(--tbs-green)!important;border-color:var(--tbs-green)!important}
+.text-primary{color:var(--tbs-green)!important}
+.checkout-title{font-weight:700}
+.summary-item{border-bottom:1px solid #eee;padding:10px 0}
+.summary-item:last-child{border-bottom:0}
+.total-box{font-size:20px;font-weight:700}
+.required::after{content:" *";color:#dc3545}
+</style>
+
+<style id="tbs-checkout-frontend">
+:root{
+  --tbs-green:#198754;
+  --tbs-dark:#146c43;
+  --tbs-soft:#f4f8f5;
+  --tbs-border:#e5ebe7;
+}
+body{background:#f7f9f8;color:#212529;}
+.header-main{background:#fff;}
+.tbs-brand{letter-spacing:.3px;}
+.section-pagetop{background:linear-gradient(135deg,#eef8f2,#fff);border-bottom:1px solid var(--tbs-border);}
+.section-pagetop .title-page{font-weight:800;margin-bottom:6px;}
+.checkout-title{font-weight:750;color:#173b2b;}
+.card{
+  border:1px solid var(--tbs-border);
+  border-radius:16px;
+  box-shadow:0 6px 24px rgba(20,70,45,.06);
+  overflow:hidden;
+}
+.card-body{padding:24px;}
+.form-control{
+  border-radius:10px;
+  border:1px solid #d8e1dc;
+  min-height:44px;
+}
+.form-control:focus{
+  border-color:var(--tbs-green);
+  box-shadow:0 0 0 .18rem rgba(25,135,84,.12);
+}
+textarea.form-control{min-height:auto;}
+.required::after{content:" *";color:#dc3545;}
+.checkout-step{
+  display:flex;align-items:center;gap:10px;margin-bottom:22px;
+}
+.checkout-step .step-number{
+  width:34px;height:34px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--tbs-green);color:#fff;font-weight:700;
+}
+.payment-box{
+  border:1px solid #cfe7d8;
+  background:#f1fbf5;
+  border-radius:12px;
+  padding:16px;
+}
+.summary-card{position:sticky;top:18px;}
+.summary-item{padding:13px 0;border-bottom:1px solid #edf1ee;}
+.summary-item:last-child{border-bottom:0;}
+.total-box{font-size:21px;font-weight:800;color:#173b2b;}
+.btn-primary{
+  background:var(--tbs-green)!important;
+  border-color:var(--tbs-green)!important;
+  border-radius:10px;
+  min-height:46px;
+  font-weight:650;
+}
+.btn-primary:hover{background:var(--tbs-dark)!important;border-color:var(--tbs-dark)!important;}
+.btn-outline-primary{
+  color:var(--tbs-green)!important;
+  border-color:var(--tbs-green)!important;
+  border-radius:10px;
+}
+.btn-light{border-radius:10px;min-height:44px;}
+.footer-clean{background:#fff;}
+@media(max-width:767.98px){
+  .card-body{padding:18px;}
+  .section-pagetop{padding:24px 0;}
+  .section-pagetop .title-page{font-size:25px;}
+  .summary-card{position:static;margin-top:18px;}
+  .header-main .row{gap:10px;}
+  .header-main .col.text-right{text-align:right!important;}
+  .header-main .btn{font-size:13px;padding:8px 10px;}
+}
+</style>
+
+</head>
+<body>
+
+<header class="section-header border-bottom">
+  <section class="header-main">
+    <div class="container">
+      <div class="row align-items-center py-3">
+        <div class="col">
+          <a href="./index.html" class="tbs-brand" style="font-size:30px;font-weight:bold;color:#0a6952;text-decoration:none">T.B.S.</a>
+        </div>
+        <div class="col text-right">
+          <a href="./cart.html" class="btn btn-outline-primary">
+            <i class="fa fa-shopping-cart"></i> Retour au panier
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</header>
+
+<section class="section-pagetop bg">
+  <div class="container">
+    <h2 class="title-page">Finaliser la commande</h2>
+    <p class="text-muted mb-0">Vérifiez vos informations avant de passer au paiement.</p>
+  </div>
+</section>
+
+<section class="section-content padding-y">
+<div class="container">
+<form id="checkoutForm">
+<div class="row">
+
+  <main class="col-lg-8">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="checkout-step"><span class="step-number">1</span><h4 class="checkout-title mb-0">Informations du client</h4></div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="required">Prénom</label>
+            <input id="prenom" name="prenom" class="form-control" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="required">Nom</label>
+            <input id="nom" name="nom" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="required">Téléphone</label>
+            <input id="telephone" name="telephone" type="tel" class="form-control"
+                   placeholder="+221 77 000 00 00" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Email</label>
+            <input id="email" name="email" type="email" class="form-control"
+                   placeholder="exemple@email.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="required">Adresse de livraison</label>
+          <input id="adresse" name="adresse" class="form-control"
+                 placeholder="Quartier, rue, numéro..." required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="required">Ville</label>
+            <input id="ville" name="ville" class="form-control" value="Dakar" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Quartier</label>
+            <input id="quartier" name="quartier" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Instructions de livraison</label>
+          <textarea id="instructions" name="instructions" class="form-control" rows="3"
+                    placeholder="Ex. appeler avant d'arriver..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="checkout-step mb-3"><span class="step-number">2</span><h4 class="checkout-title mb-0">Paiement</h4></div>
+        <div class="payment-box mb-0">
+          <i class="fa fa-lock mr-1"></i>
+          Le paiement sera effectué de manière sécurisée via PayTech.
+          <br><small>Wave, Orange Money et autres moyens disponibles seront proposés par PayTech selon la configuration du compte marchand.</small>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="checkout-title mb-3"><i class="fa fa-shopping-bag mr-2 text-primary"></i>Votre commande</h4>
+        <div id="orderItems"></div>
+        <hr>
+        <div class="d-flex justify-content-between">
+          <span>Sous-total</span><strong id="subtotal">0 FCFA</strong>
+        </div>
+        <div class="d-flex justify-content-between mt-2">
+          <span>Livraison</span><span id="delivery">À confirmer</span>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between total-box">
+          <span>Total produits</span><span id="total">0 FCFA</span>
+        </div>
+
+        <button id="payButton" type="submit" class="btn btn-primary btn-block mt-4">
+          <i class="fa fa-lock"></i> Continuer vers le paiement
+        </button>
+
+        <a href="./store.html" class="btn btn-light btn-block mt-2">Continuer mes achats</a>
+
+        <div id="emptyMessage" class="alert alert-warning mt-3 d-none">
+          Votre panier est vide.
+        </div>
+      </div>
+    </div>
+  </aside>
+
+</div>
+</form>
+</div>
+</section>
+
+<footer class="section-footer border-top padding-y footer-clean">
+<div class="container">
+  <p class="float-md-right">&copy; 2026 THIOSSANE BUSINESS SERVICE. Tous droits réservés.</p>
+</div>
+</footer>
+
+<script>
+(function(){
+  const KEY = "tbs_cart_v3";
+  const form = document.getElementById("checkoutForm");
+  const itemsEl = document.getElementById("orderItems");
+  const subtotalEl = document.getElementById("subtotal");
+  const totalEl = document.getElementById("total");
+  const emptyEl = document.getElementById("emptyMessage");
+  const payButton = document.getElementById("payButton");
+
+  function getCart(){
+    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+    catch(e){ return []; }
+  }
+
+  function money(n){
+    return Number(n).toLocaleString("fr-FR") + " FCFA";
+  }
+
+  const cart = getCart();
+
+  if(!cart.length){
+    emptyEl.classList.remove("d-none");
+    payButton.disabled = true;
+    form.querySelectorAll("input,textarea").forEach(el => el.disabled = true);
+  }
+
+  let subtotal = 0;
+  itemsEl.innerHTML = "";
+
+  cart.forEach(item => {
+    const qty = Number(item.quantite) || 1;
+    const price = Number(item.prix) || 0;
+    const line = price * qty;
+    subtotal += line;
+
+    const div = document.createElement("div");
+    div.className = "summary-item";
+    div.innerHTML =
+      '<div class="font-weight-bold">' + item.nom + '</div>' +
+      '<div class="small text-muted">' + (item.format || "") +
+      ' × ' + qty + '</div>' +
+      '<div class="text-right font-weight-bold">' + money(line) + '</div>';
+    itemsEl.appendChild(div);
+  });
+
+  subtotalEl.textContent = money(subtotal);
+  totalEl.textContent = money(subtotal);
+
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+
+    if(!cart.length){
+      alert("Votre panier est vide.");
+      return;
+    }
+
+    const data = {
+      reference: "TBS-" + Date.now(),
+      client: {
+        prenom: document.getElementById("prenom").value.trim(),
+        nom: document.getElementById("nom").value.trim(),
+        telephone: document.getElementById("telephone").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        adresse: document.getElementById("adresse").value.trim(),
+        ville: document.getElementById("ville").value.trim(),
+        quartier: document.getElementById("quartier").value.trim(),
+        instructions: document.getElementById("instructions").value.trim()
+      },
+      produits: cart,
+      montant: subtotal,
+      devise: "XOF"
+    };
+
+    /*
+      ETAPE SUIVANTE :
+      Cette commande sera envoyée à notre backend sécurisé,
+      qui appellera PayTech avec la clé API secrète.
+      Ne jamais placer la clé secrète PayTech dans ce fichier.
+    */
+    localStorage.setItem("tbs_pending_order", JSON.stringify(data));
+
+    alert("La page de commande est prête. Le paiement PayTech sera connecté après la mise en place du backend sécurisé.");
+  });
+})();
+</script>
+
+</body>
+</html>

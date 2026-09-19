@@ -1,0 +1,515 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Finaliser la commande - T.B.S.</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+<link href="fonts/fontawesome/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="css/ui.css" rel="stylesheet" type="text/css"/>
+<link href="css/responsive.css" rel="stylesheet" type="text/css"/>
+<style>
+:root{--tbs-green:#198754;--tbs-dark:#146c43;}
+.btn-primary{background:var(--tbs-green)!important;border-color:var(--tbs-green)!important}
+.text-primary{color:var(--tbs-green)!important}
+.checkout-title{font-weight:700}
+.summary-item{border-bottom:1px solid #eee;padding:10px 0}
+.summary-item:last-child{border-bottom:0}
+.total-box{font-size:20px;font-weight:700}
+.required::after{content:" *";color:#dc3545}
+</style>
+
+<style id="tbs-checkout-frontend">
+:root{
+  --tbs-green:#198754;
+  --tbs-dark:#146c43;
+  --tbs-soft:#f4f8f5;
+  --tbs-border:#e5ebe7;
+}
+body{background:#f7f9f8;color:#212529;}
+.header-main{background:#fff;}
+.tbs-brand{letter-spacing:.3px;}
+.section-pagetop{background:linear-gradient(135deg,#eef8f2,#fff);border-bottom:1px solid var(--tbs-border);}
+.section-pagetop .title-page{font-weight:800;margin-bottom:6px;}
+.checkout-title{font-weight:750;color:#173b2b;}
+.card{
+  border:1px solid var(--tbs-border);
+  border-radius:16px;
+  box-shadow:0 6px 24px rgba(20,70,45,.06);
+  overflow:hidden;
+}
+.card-body{padding:24px;}
+.form-control{
+  border-radius:10px;
+  border:1px solid #d8e1dc;
+  min-height:44px;
+}
+.form-control:focus{
+  border-color:var(--tbs-green);
+  box-shadow:0 0 0 .18rem rgba(25,135,84,.12);
+}
+textarea.form-control{min-height:auto;}
+.required::after{content:" *";color:#dc3545;}
+.checkout-step{
+  display:flex;align-items:center;gap:10px;margin-bottom:22px;
+}
+.checkout-step .step-number{
+  width:34px;height:34px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--tbs-green);color:#fff;font-weight:700;
+}
+.payment-box{
+  border:1px solid #cfe7d8;
+  background:#f1fbf5;
+  border-radius:12px;
+  padding:16px;
+}
+.summary-card{position:sticky;top:18px;}
+.summary-item{padding:13px 0;border-bottom:1px solid #edf1ee;}
+.summary-item:last-child{border-bottom:0;}
+.total-box{font-size:21px;font-weight:800;color:#173b2b;}
+.btn-primary{
+  background:var(--tbs-green)!important;
+  border-color:var(--tbs-green)!important;
+  border-radius:10px;
+  min-height:46px;
+  font-weight:650;
+}
+.btn-primary:hover{background:var(--tbs-dark)!important;border-color:var(--tbs-dark)!important;}
+.btn-outline-primary{
+  color:var(--tbs-green)!important;
+  border-color:var(--tbs-green)!important;
+  border-radius:10px;
+}
+.btn-light{border-radius:10px;min-height:44px;}
+.footer-clean{background:#fff;}
+@media(max-width:767.98px){
+  .card-body{padding:18px;}
+  .section-pagetop{padding:24px 0;}
+  .section-pagetop .title-page{font-size:25px;}
+  .summary-card{position:static;margin-top:18px;}
+  .header-main .row{gap:10px;}
+  .header-main .col.text-right{text-align:right!important;}
+  .header-main .btn{font-size:13px;padding:8px 10px;}
+}
+</style>
+
+</head>
+<body>
+
+<header class="section-header border-bottom">
+  <section class="header-main">
+    <div class="container">
+      <div class="row align-items-center py-3">
+        <div class="col">
+          <a href="./index.html" class="tbs-brand" style="font-size:30px;font-weight:bold;color:#0a6952;text-decoration:none">T.B.S.</a>
+        </div>
+        <div class="col text-right">
+          <a href="./cart.html" class="btn btn-outline-primary">
+            <i class="fa fa-shopping-cart"></i> Retour au panier
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</header>
+
+<section class="section-pagetop bg">
+  <div class="container">
+    <h2 class="title-page">Finaliser la commande</h2>
+    <p class="text-muted mb-0">Vérifiez vos informations avant de passer au paiement.</p>
+  </div>
+</section>
+
+<section class="section-content padding-y">
+<div class="container">
+<form id="checkoutForm">
+<div class="row">
+
+  <main class="col-lg-8">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="checkout-step"><span class="step-number">1</span><h4 class="checkout-title mb-0">Informations du client</h4></div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="required">Prénom</label>
+            <input id="prenom" name="prenom" class="form-control" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="required">Nom</label>
+            <input id="nom" name="nom" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="required">Téléphone</label>
+            <input id="telephone" name="telephone" type="tel" class="form-control"
+                   placeholder="+221 77 000 00 00" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Email</label>
+            <input id="email" name="email" type="email" class="form-control"
+                   placeholder="exemple@email.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="required">Adresse de livraison</label>
+          <input id="adresse" name="adresse" class="form-control"
+                 placeholder="Quartier, rue, numéro..." required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label class="required">Ville</label>
+            <input id="ville" name="ville" class="form-control" value="Dakar" required>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Quartier</label>
+            <input id="quartier" name="quartier" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Instructions de livraison</label>
+          <textarea id="instructions" name="instructions" class="form-control" rows="3"
+                    placeholder="Ex. appeler avant d'arriver..."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="checkout-step mb-3"><span class="step-number">2</span><h4 class="checkout-title mb-0">Paiement</h4></div>
+        <div class="payment-box mb-0">
+          <i class="fa fa-lock mr-1"></i>
+          Le paiement sera effectué de manière sécurisée via PayTech.
+          <br><small>Wave, Orange Money et autres moyens disponibles seront proposés par PayTech selon la configuration du compte marchand.</small>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="col-lg-4">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="checkout-title mb-3"><i class="fa fa-shopping-bag mr-2 text-primary"></i>Votre commande</h4>
+        <div id="orderItems"></div>
+        <hr>
+        <div class="d-flex justify-content-between">
+          <span>Sous-total</span><strong id="subtotal">0 FCFA</strong>
+        </div>
+        <div class="d-flex justify-content-between mt-2">
+          <span>Livraison</span><span id="delivery">À confirmer</span>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between total-box">
+          <span>Total produits</span><span id="total">0 FCFA</span>
+        </div>
+
+        <button id="payButton" type="submit" class="btn btn-primary btn-block mt-4">
+          <i class="fa fa-lock"></i> Continuer vers le paiement
+        </button>
+
+        <a href="./store.html" class="btn btn-light btn-block mt-2">Continuer mes achats</a>
+
+        <div id="emptyMessage" class="alert alert-warning mt-3 d-none">
+          Votre panier est vide.
+        </div>
+      </div>
+    </div>
+  </aside>
+
+</div>
+</form>
+</div>
+</section>
+
+<footer class="section-footer border-top padding-y footer-clean">
+<div class="container">
+  <p class="float-md-right">&copy; 2026 THIOSSANE BUSINESS SERVICE. Tous droits réservés.</p>
+</div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+
+<script>
+(function(){
+  const KEY = "tbs_cart_v3";
+  const form = document.getElementById("checkoutForm");
+  const itemsEl = document.getElementById("orderItems");
+  const subtotalEl = document.getElementById("subtotal");
+  const totalEl = document.getElementById("total");
+  const emptyEl = document.getElementById("emptyMessage");
+  const payButton = document.getElementById("payButton");
+
+  function getCart(){
+    try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+    catch(e){ return []; }
+  }
+
+  function money(n){
+    return Number(n).toLocaleString("fr-FR") + " FCFA";
+  }
+
+  function escapeHtml(value){
+    return String(value ?? "").replace(/[&<>"']/g, function(char){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char];
+    });
+  }
+
+  const cart = getCart();
+
+  if(!cart.length){
+    emptyEl.classList.remove("d-none");
+    payButton.disabled = true;
+    form.querySelectorAll("input,textarea").forEach(el => el.disabled = true);
+  }
+
+  let subtotal = 0;
+  itemsEl.innerHTML = "";
+
+  cart.forEach(item => {
+    const qty = Number(item.quantite) || 1;
+    const price = Number(item.prix) || 0;
+    const line = price * qty;
+    subtotal += line;
+
+    const div = document.createElement("div");
+    div.className = "summary-item";
+    div.innerHTML =
+      '<div class="font-weight-bold">' + escapeHtml(item.nom || "Produit") + '</div>' +
+      '<div class="small text-muted">' + escapeHtml(item.format || "") +
+      ' × ' + qty + '</div>' +
+      '<div class="text-right font-weight-bold">' + money(line) + '</div>';
+    itemsEl.appendChild(div);
+  });
+
+  subtotalEl.textContent = money(subtotal);
+  totalEl.textContent = money(subtotal);
+
+  // Pré-remplir les informations disponibles du compte connecté.
+  async function loadUserInfo(){
+    if (!window.supabase ||
+        typeof SUPABASE_URL === "undefined" ||
+        typeof SUPABASE_PUBLISHABLE_KEY === "undefined" ||
+        SUPABASE_PUBLISHABLE_KEY === "COLLE_ICI_TA_PUBLISHABLE_KEY") {
+      return;
+    }
+
+    const client = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const { data } = await client.auth.getUser();
+    if (!data || !data.user) return;
+
+    const user = data.user;
+    const { data: profile } = await client
+      .from("profiles")
+      .select("full_name, phone, address, city")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    if (user.email && !document.getElementById("email").value) {
+      document.getElementById("email").value = user.email;
+    }
+
+    const fullName = (profile && profile.full_name) || "";
+    const parts = fullName.trim().split(/\s+/).filter(Boolean);
+
+    if (parts.length && !document.getElementById("prenom").value) {
+      document.getElementById("prenom").value = parts[0];
+    }
+    if (parts.length > 1 && !document.getElementById("nom").value) {
+      document.getElementById("nom").value = parts.slice(1).join(" ");
+    }
+    if (profile && profile.phone && !document.getElementById("telephone").value) {
+      document.getElementById("telephone").value = profile.phone;
+    }
+    if (profile && profile.address && !document.getElementById("adresse").value) {
+      document.getElementById("adresse").value = profile.address;
+    }
+    if (profile && profile.city && !document.getElementById("ville").value) {
+      document.getElementById("ville").value = profile.city;
+    }
+  }
+
+  loadUserInfo();
+
+  form.addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    if(!cart.length){
+      alert("Votre panier est vide.");
+      return;
+    }
+
+    if (!window.supabase ||
+        typeof SUPABASE_URL === "undefined" ||
+        typeof SUPABASE_PUBLISHABLE_KEY === "undefined" ||
+        SUPABASE_PUBLISHABLE_KEY === "COLLE_ICI_TA_PUBLISHABLE_KEY") {
+      alert("Configuration Supabase introuvable.");
+      return;
+    }
+
+    payButton.disabled = true;
+    payButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Enregistrement...';
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const { data: userData } =
+      await supabaseClient.auth.getUser();
+
+    // La commande peut être passée sans créer de compte.
+    // Si le client est connecté, on rattache simplement la commande à son compte.
+    const user = userData && userData.user ? userData.user : null;
+    const prenom = document.getElementById("prenom").value.trim();
+    const nom = document.getElementById("nom").value.trim();
+    const telephone = document.getElementById("telephone").value.trim();
+    const email = document.getElementById("email").value.trim() || (user && user.email) || "";
+    const adresse = document.getElementById("adresse").value.trim();
+    const ville = document.getElementById("ville").value.trim();
+    const quartier = document.getElementById("quartier").value.trim();
+    const instructions = document.getElementById("instructions").value.trim();
+
+    const orderNumber =
+      "TBS-" +
+      new Date().toISOString().slice(0,10).replace(/-/g,"") +
+      "-" + Math.random().toString(36).slice(2,8).toUpperCase();
+
+    // Création de la commande via la fonction Supabase sécurisée.
+    // Elle fonctionne pour un client invité (user_id = NULL) ou connecté.
+    const { data: newOrderId, error: orderError } = await supabaseClient.rpc(
+      "create_guest_order",
+      {
+        p_order_number: orderNumber,
+        p_customer_name: (prenom + " " + nom).trim(),
+        p_customer_email: email,
+        p_customer_phone: telephone,
+        p_delivery_address: (adresse + (quartier ? ", " + quartier : "")).trim(),
+        p_delivery_city: ville,
+        p_total_fcfa: subtotal
+      }
+    );
+
+    if (orderError || !newOrderId) {
+      console.error("Création commande:", orderError);
+      alert("La commande n'a pas pu être enregistrée. Vérifiez la configuration Supabase.");
+      payButton.disabled = false;
+      payButton.innerHTML = '<i class="fa fa-lock"></i> Continuer vers le paiement';
+      return;
+    }
+
+    const orderItems = cart.map(function(item){
+      const qty = Number(item.quantite) || 1;
+      const price = Number(item.prix) || 0;
+
+      return {
+        product_id: null,
+        product_name: item.nom || "Produit",
+        product_format: item.format || null,
+        unit_price_fcfa: price,
+        quantity: qty,
+        subtotal_fcfa: price * qty
+      };
+    });
+
+    // Enregistrement des articles via la fonction Supabase sécurisée.
+    const { error: itemsError } = await supabaseClient.rpc(
+      "add_order_items",
+      {
+        p_order_id: newOrderId,
+        p_items: orderItems
+      }
+    );
+
+    if (itemsError) {
+      console.error("Articles commande:", itemsError);
+      alert("La commande a été créée, mais ses articles n'ont pas pu être enregistrés. Vérifiez la fonction Supabase add_order_items.");
+      payButton.disabled = false;
+      payButton.innerHTML = '<i class="fa fa-lock"></i> Continuer vers le paiement';
+      return;
+    }
+
+    // Sauvegarde locale uniquement pour la page de confirmation.
+    localStorage.setItem("tbs_pending_order", JSON.stringify({
+      reference: orderNumber,
+      client: {
+        prenom, nom, telephone, email, adresse, ville, quartier, instructions
+      },
+      produits: cart,
+      montant: subtotal,
+      devise: "XOF"
+    }));
+
+    // Création du paiement PayTech via l'Edge Function sécurisée.
+    // Les clés PayTech restent côté serveur dans Supabase.
+    payButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Ouverture du paiement...';
+
+    const paytechEndpoint =
+      "https://hclmncksgqvlqaenmjja.supabase.co/functions/v1/paytech-payment";
+
+    // PayTech demande des URLs HTTPS pour les redirections.
+    // En local, on ne les envoie pas afin de pouvoir tester l'appel API.
+    const redirectUrls = {
+  success_url:
+    "https://hclmncksgqvlqaenmjja.supabase.co/functions/v1/paytech-success",
+
+  cancel_url:
+    "https://hclmncksgqvlqaenmjja.supabase.co/functions/v1/paytech-cancel",
+};
+
+    const paytechResponse = await fetch(paytechEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        item_name: "Commande T.B.S. " + orderNumber,
+        item_price: subtotal,
+        ref_command: orderNumber,
+        command_name: "Commande T.B.S. " + orderNumber,
+        ...redirectUrls,
+      }),
+    });
+
+    let paytechResult;
+
+    try {
+      paytechResult = await paytechResponse.json();
+    } catch (parseError) {
+      console.error("Réponse PayTech invalide:", parseError);
+      alert("La réponse du service de paiement est invalide. Veuillez réessayer.");
+      payButton.disabled = false;
+      payButton.innerHTML = '<i class="fa fa-lock"></i> Continuer vers le paiement';
+      return;
+    }
+
+    console.log("Réponse PayTech:", paytechResult);
+
+    if (paytechResult.success === 1 && paytechResult.redirect_url) {
+      window.location.href = paytechResult.redirect_url;
+      return;
+    }
+
+    console.error("Erreur PayTech:", paytechResult);
+    alert(
+      paytechResult.message ||
+      "Impossible d'ouvrir le paiement PayTech. Veuillez réessayer."
+    );
+
+    payButton.disabled = false;
+    payButton.innerHTML = '<i class="fa fa-lock"></i> Continuer vers le paiement';
+  });
+})();
+</script>
+
+</body>

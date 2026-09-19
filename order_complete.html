@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>T.B.S. | Commande confirmée</title>
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+<script src="js/jquery-2.0.0.min.js"></script>
+<script src="js/bootstrap.bundle.min.js"></script>
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="fonts/fontawesome/css/all.min.css" rel="stylesheet">
+<link href="css/ui.css" rel="stylesheet">
+<link href="css/responsive.css" rel="stylesheet">
+
+<style>
+body{background:#f6f8f6;color:#26332b}
+.confirm-wrap{min-height:70vh;display:flex;align-items:center;padding:45px 0}
+.confirm-card{background:#fff;border:0;border-radius:18px;box-shadow:0 8px 30px rgba(25,135,84,.09);padding:38px}
+.confirm-icon{width:76px;height:76px;border-radius:50%;background:#eaf7ef;color:#198754;display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 20px}
+.brand-tbs{font-size:30px;font-weight:800;color:#198754}
+.summary-item{padding:13px 0;border-bottom:1px solid #edf1ee}
+.summary-item:last-child{border-bottom:0}
+.total-box{background:#f0f8f3;border-radius:12px;padding:16px}
+.btn-tbs{background:#198754;color:#fff;border-radius:9px;font-weight:600}
+.btn-tbs:hover{background:#157347;color:#fff}
+.footer-clean{background:#fff}
+</style>
+</head>
+
+<body>
+
+<header class="border-bottom bg-white">
+<div class="container py-3 d-flex align-items-center justify-content-between">
+<a href="./index.html" class="brand-tbs text-decoration-none">T.B.S.</a>
+<div>
+<a href="./store.html" class="btn btn-outline-success mr-2"><i class="fa fa-store mr-1"></i>Boutique</a>
+<a href="./cart.html" class="btn btn-outline-success"><i class="fa fa-shopping-cart mr-1"></i>Panier</a>
+</div>
+</div>
+</header>
+
+<section class="confirm-wrap">
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-lg-8">
+
+<div class="confirm-card">
+<div class="text-center">
+<div class="confirm-icon"><i class="fa fa-check"></i></div>
+<h1 class="h2 mb-2">Commande enregistrée</h1>
+<p class="text-muted mb-4">Merci pour votre commande chez Thiossane Business Service.</p>
+</div>
+
+<div id="orderContent">
+<div class="alert alert-info">
+<i class="fa fa-info-circle mr-1"></i>
+Les informations de votre commande seront affichées ici.
+</div>
+</div>
+
+<div class="text-center mt-4">
+<a href="./store.html" class="btn btn-tbs mr-2">Continuer mes achats</a>
+<a href="./dashboard.html" class="btn btn-outline-success">Mon compte</a>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+<footer class="section-footer border-top padding-y footer-clean">
+<div class="container">
+<p class="float-md-right mb-0">&copy; 2026 THIOSSANE BUSINESS SERVICE. Tous droits réservés</p>
+<p class="mb-0"><a href="#">Conditions générales</a></p>
+</div>
+</footer>
+
+<script>
+(function(){
+  const container = document.getElementById("orderContent");
+  let order = null;
+
+  try {
+    const raw = localStorage.getItem("tbs_pending_order");
+    if (raw) order = JSON.parse(raw);
+  } catch(e) {}
+
+  if (!order) {
+    container.innerHTML =
+      '<div class="alert alert-warning mb-0">' +
+      '<i class="fa fa-exclamation-circle mr-1"></i>' +
+      'Aucune commande récente n’a été trouvée sur cet appareil.' +
+      '</div>';
+    return;
+  }
+
+  const client = order.client || {};
+  const products = Array.isArray(order.produits) ? order.produits : [];
+  const amount = Number(order.montant || 0).toLocaleString("fr-FR");
+
+  let productsHtml = products.map(function(p){
+    const qty = Number(p.quantite) || 1;
+    const price = Number(p.prix) || 0;
+    const line = (price * qty).toLocaleString("fr-FR");
+    return '<div class="summary-item d-flex justify-content-between">' +
+      '<div><strong>'+ (p.nom || "Produit") +'</strong>' +
+      '<div class="small text-muted">'+ (p.format || "") +' × '+qty+'</div></div>' +
+      '<strong>'+line+' FCFA</strong>' +
+      '</div>';
+  }).join("");
+
+  container.innerHTML =
+    '<div class="row mb-4">' +
+      '<div class="col-md-6 mb-3"><small class="text-muted d-block">Référence</small><strong>'+ (order.reference || "TBS") +'</strong></div>' +
+      '<div class="col-md-6 mb-3"><small class="text-muted d-block">Statut</small><span class="badge badge-success">Commande enregistrée</span></div>' +
+    '</div>' +
+
+    '<div class="card border mb-4"><div class="card-body">' +
+      '<h2 class="h6 mb-3">Informations de livraison</h2>' +
+      '<p class="mb-0">'+
+      (client.prenom || '')+' '+(client.nom || '')+'<br>'+
+      (client.telephone || '')+
+      (client.email ? '<br>'+client.email : '')+'<br>'+
+      (client.adresse || '')+'<br>'+
+      (client.quartier ? client.quartier+', ' : '')+(client.ville || '')+
+      (client.instructions ? '<br><small class="text-muted">Instructions : '+client.instructions+'</small>' : '')+
+      '</p>' +
+    '</div></div>' +
+
+    '<h2 class="h6 mb-2">Résumé de la commande</h2>' +
+    productsHtml +
+    '<div class="total-box mt-3 d-flex justify-content-between align-items-center">' +
+      '<strong>Total</strong><strong>'+amount+' FCFA</strong>' +
+    '</div>' +
+
+    '<div class="alert alert-success mt-4 mb-0">' +
+      '<i class="fa fa-lock mr-1"></i>' +
+      'Le paiement sécurisé et le traitement définitif de la commande seront reliés au backend T.B.S. lors de l’intégration du paiement.' +
+    '</div>';
+})();
+</script>
+
+</body>
+</html>

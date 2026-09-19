@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="cache-control" content="max-age=604800" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Thiossane Business Services</title>
+
+<link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+<!-- jQuery -->
+<script src="js/jquery-2.0.0.min.js" type="text/javascript"></script>
+
+<!-- Bootstrap4 files-->
+<script src="js/bootstrap.bundle.min.js" type="text/javascript"></script>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+<!-- Font awesome 5 -->
+<link href="fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet">
+
+<!-- custom style -->
+<link href="css/ui.css" rel="stylesheet" type="text/css"/>
+<link href="css/responsive.css" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+
+<!-- custom javascript -->
+<script src="js/script.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+/// some script
+
+// jquery ready start
+$(document).ready(function() {
+	// jQuery code
+
+}); 
+// jquery end
+</script>
+
+
+<style id="tbs-global-theme">
+:root{--tbs-green:#198754;--tbs-dark:#146c43;--tbs-yellow:#f2c94c;}
+.btn-primary,.btn-primary:hover,.btn-primary:focus,.btn-primary:active{
+ background-color:var(--tbs-green)!important;border-color:var(--tbs-green)!important;color:#fff!important;
+}
+.btn-outline-primary{color:var(--tbs-green)!important;border-color:var(--tbs-green)!important;}
+.btn-outline-primary:hover,.btn-outline-primary:focus,.btn-outline-primary:active{
+ background-color:var(--tbs-green)!important;border-color:var(--tbs-green)!important;color:#fff!important;
+}
+.text-primary{color:var(--tbs-green)!important;}
+.bg-primary{background-color:var(--tbs-green)!important;}
+.border-primary{border-color:var(--tbs-green)!important;}
+.page-link{color:var(--tbs-green)!important;}
+.page-item.active .page-link{background-color:var(--tbs-green)!important;border-color:var(--tbs-green)!important;color:#fff!important;}
+a:hover{color:var(--tbs-green)!important;}
+</style>
+
+
+<style id="tbs-cart-cleanup">
+body{color:#212529;}
+.text-muted{color:#6c757d!important;}
+.card .btn-danger{background:#dc3545!important;border-color:#dc3545!important;}
+</style>
+
+<style id="tbs-cart-frontend">
+:root{--tbs-green:#198754;--tbs-dark:#146c43;--tbs-yellow:#f2c94c;--tbs-bg:#f6f8f7;--tbs-border:#e6ece8}
+body{background:var(--tbs-bg);color:#212529}
+.section-header{background:#fff}
+.header-main{padding:16px 0!important;background:#fff}
+.brand-wrap{letter-spacing:.5px}
+.category-wrap .btn{border-radius:8px}
+.search .form-control{border-radius:8px 0 0 8px!important;border:1px solid #dfe7e2}
+.search .btn{border-radius:0 8px 8px 0}
+.widget-header .title{font-size:11px}
+.icon-sm{display:inline-flex;align-items:center;justify-content:center}
+.section-content{padding-top:35px!important;padding-bottom:55px!important}
+.table-shopping-cart{margin-bottom:0}
+.table-shopping-cart thead th{font-weight:700;letter-spacing:.03em;color:#6c757d;padding:18px 15px;background:#fbfcfb}
+.table-shopping-cart tbody td{padding:20px 15px;vertical-align:middle;border-top:1px solid var(--tbs-border)}
+.table-shopping-cart .itemside{min-width:290px;margin:0}
+.table-shopping-cart .aside{width:90px;height:90px;border-radius:12px;overflow:hidden;background:#f3f6f4;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.table-shopping-cart .aside img{width:100%;height:100%;object-fit:cover}
+.table-shopping-cart .info{padding-left:14px}
+.table-shopping-cart .info .title{font-weight:700;font-size:16px}
+.table-shopping-cart .info .title:hover{color:var(--tbs-green)!important}
+.table-shopping-cart .input-spinner{width:112px;border:1px solid #dee5e1;border-radius:8px;overflow:hidden}
+.table-shopping-cart .input-spinner .btn{border:0;background:#fff!important;color:#333;padding:7px 10px}
+.table-shopping-cart .input-spinner .btn:hover{color:var(--tbs-green)}
+.table-shopping-cart .input-spinner .form-control{border:0;box-shadow:none;background:#fff}
+.price-wrap .price{font-size:16px;color:var(--tbs-dark)}
+.card{border:1px solid var(--tbs-border);border-radius:14px;box-shadow:0 5px 22px rgba(0,0,0,.05);overflow:hidden}
+.col-lg-3>.card .card-body{padding:24px}
+.dlist-align{display:flex;justify-content:space-between;gap:15px;margin-bottom:15px}
+.dlist-align dt{font-weight:500}
+.dlist-align dd{margin:0}
+#cartTotal{font-size:20px;color:var(--tbs-dark)!important}
+.card-body hr{border-color:var(--tbs-border)}
+.card-body .btn{border-radius:8px;font-weight:600;padding:11px 15px}
+.card-body .text-center img{object-fit:contain;border-radius:4px;margin:0 3px}
+.btn-danger{border-radius:7px!important}
+@media(max-width:767px){
+ .header-main{padding:12px 0!important}
+ .header-main .row{row-gap:12px}
+ .category-wrap{float:none!important}
+ .category-wrap .btn{font-size:13px}
+ .search{margin-top:4px}
+ .widget-header .title{display:none}
+ .section-content{padding-top:20px!important}
+ .table-shopping-cart thead{display:none}
+ .table-shopping-cart tbody tr{display:block;padding:15px 0;border-top:1px solid var(--tbs-border)}
+ .table-shopping-cart tbody td{display:block;border:0!important;padding:7px 15px}
+ .table-shopping-cart .itemside{min-width:0}
+ .table-shopping-cart .aside{width:75px;height:75px}
+ .table-shopping-cart .info .title{font-size:15px}
+ .table-shopping-cart .input-spinner{width:120px}
+ .table-shopping-cart td:nth-child(3){padding-top:4px}
+ .table-shopping-cart td.text-right{text-align:left!important}
+ .table-shopping-cart .btn-danger{width:auto}
+ .col-lg-3{margin-top:18px}
+}
+</style>
+
+</head>
+<body>
+
+
+<header class="section-header">
+<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
+<div class="container">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTop4">
+    <ul class="navbar-nav mr-auto">
+    	<li class="nav-item dropdown">
+		 	<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">   Langue </a>
+		    <ul class="dropdown-menu small">
+				<li><a class="dropdown-item" href="#">Français</a></li>
+				
+		    </ul>
+		</li>
+		<li class="nav-item dropdown">
+			<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"> FCFA </a>
+			<ul class="dropdown-menu small">
+				<li><a class="dropdown-item" href="#">FCFA</a></li>
+				<li><a class="dropdown-item" href="#">FCFA</a></li>
+		    </ul>
+		</li>
+    </ul>
+    <ul class="navbar-nav">
+		<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> E-mail </a></li>
+		<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Appelez-nous </a></li>
+	</ul> <!-- list-inline //  -->
+  </div> <!-- navbar-collapse .// -->
+</div> <!-- container //  -->
+</nav>
+
+<section class="header-main border-bottom">
+	<div class="container">
+<div class="row align-items-center">
+	<div class="col-lg-2 col-md-3 col-6">
+		<a href="./" class="brand-wrap" style="font-size: 30px;">
+			<!-- <img class="logo" src="./images/logo.png"> -->
+			<span style="color: rgb(8, 98, 59); font-weight: bold;">T.B.S.</span></span>
+		</a> <!-- brand-wrap.// -->
+	</div>
+	<div class="col-lg col-sm col-md col-6 flex-grow-0">
+		<div class="category-wrap dropdown d-inline-block float-right">
+			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"> 
+				<i class="fa fa-bars"></i> Toutes les catégories 
+			</button>
+			<div class="dropdown-menu">
+				<a class="dropdown-item" href="#">Produits alimentaires </a>
+				<a class="dropdown-item" href="#">Fruits et légumes transformés </a>
+				<a class="dropdown-item" href="#">Produits locaux du Sénégal</a>
+				<a class="dropdown-item" href="#">Produits naturels </a>
+				<a class="dropdown-item" href="#">Épicerie et alimentation </a>
+				<a class="dropdown-item" href="#">Bien-être et produits traditionnels </a> 
+			</div>
+		</div>  <!-- category-wrap.// -->
+	</div> <!-- col.// -->
+	<a href="./store.html" class="btn btn-outline-primary">Boutique</a>
+	<div class="col-lg  col-md-6 col-sm-12 col">
+		<form action="#" class="search">
+			<div class="input-group w-100">
+			    <input type="text" class="form-control" style="width:60%;" placeholder="Rechercher">
+			    
+			    <div class="input-group-append">
+			      <button class="btn btn-primary" type="submit">
+			        <i class="fa fa-search"></i>
+			      </button>
+			    </div>
+		    </div>
+		</form> <!-- search-wrap .end// -->
+	</div> <!-- col.// -->
+	<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
+				<div class="d-flex justify-content-end mb-3 mb-lg-0">
+					<div class="widget-header">
+						<small class="title text-muted">Bienvenue chez Thiossane Business Service</small>
+						<div> 
+							<a href="./signin.html">Connexion</a> <span class="dark-transp"> | </span>
+							<a href="./register.html"> Inscription</a>
+						</div>
+					</div>
+					<a href="./cart.html" class="widget-header pl-3 ml-3">
+						<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
+						<span class="badge badge-pill badge-danger notify">0</span>
+					</a>
+				</div> <!-- widgets-wrap.// -->
+			</div> <!-- col.// -->
+</div> <!-- row.// -->
+	</div> <!-- container.// -->
+</section> <!-- header-main .// -->
+
+
+
+</header> <!-- section-header.// -->
+
+
+<section class="section-content padding-y bg">
+<div class="container">
+
+<!-- ============================ COMPONENT 1 ================================= -->
+
+<div class="mb-4">
+  <h2 class="mb-1 font-weight-bold">Mon panier</h2>
+  <p class="text-muted mb-0">Vérifiez vos produits et les quantités avant de finaliser votre commande.</p>
+</div>
+<div class="row">
+	<aside class="col-lg-9">
+<div class="card">
+<table class="table table-borderless table-shopping-cart">
+<thead class="text-muted">
+<tr class="small text-uppercase">
+  <th scope="col">Produit</th>
+  <th scope="col" width="120">Quantité</th>
+  <th scope="col" width="120">Prix</th>
+  <th scope="col" class="text-right" width="200"> </th>
+</tr>
+</thead>
+<tbody id="cartItems"></tbody>
+</table>
+</div> <!-- card.// -->
+
+	</aside> <!-- col.// -->
+	<aside class="col-lg-3">
+
+		<div class="card">
+		<div class="card-body">
+			<dl class="dlist-align">
+			  <dt>Sous-total :</dt>
+			  <dd id="cartSubtotal" class="text-right">0 FCFA</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Taxes :</dt>
+			  <dd class="text-right">0 FCFA</dd>
+			</dl>
+			<dl class="dlist-align">
+			  <dt>Total :</dt>
+			  <dd class="text-right text-dark b"><strong id="cartTotal">0 FCFA</strong></dd>
+			</dl>
+			<hr>
+			<p class="text-center mb-3">
+				<img src="./images/misc/orange money.jpeg" height="26">
+				<img src="./images/misc/wave.jpeg" height="26">
+			</p>
+			<a href="./checkout.html" class="btn btn-primary btn-block"> Finaliser la commande </a>
+			<a href="./store.html" class="btn btn-light btn-block">Continuer mes achats</a>
+		</div> <!-- card-body.// -->
+		</div> <!-- card.// -->
+
+</aside> <!-- col.// -->
+
+
+</div> <!-- row.// -->
+<!-- ============================ COMPONENT 1 END .// ================================= -->
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<script>
+(function () {
+    const KEY = "tbs_cart_v3";
+    const container = document.getElementById("cartItems");
+    const subtotalEl = document.getElementById("cartSubtotal");
+    const totalEl = document.getElementById("cartTotal");
+
+    function getCart() {
+        try { return JSON.parse(localStorage.getItem(KEY)) || []; }
+        catch (e) { return []; }
+    }
+    function saveCart(cart) { localStorage.setItem(KEY, JSON.stringify(cart)); }
+    function formatPrix(prix) { return Number(prix).toLocaleString("fr-FR") + " FCFA"; }
+
+    function renderCart() {
+        const cart = getCart();
+        container.innerHTML = "";
+
+        if (!cart.length) {
+            container.innerHTML = `
+                <tr><td colspan="4" class="text-center py-5">
+                    <i class="fa fa-shopping-cart fa-2x mb-3"></i>
+                    <h5>Votre panier est vide</h5>
+                    <p class="text-muted">Ajoutez des produits depuis notre boutique.</p>
+                    <a href="./store.html" class="btn btn-primary">Voir nos produits</a>
+                </td></tr>`;
+        } else {
+            cart.forEach((item, index) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>
+                        <figure class="itemside align-items-center">
+                            <div class="aside"><img src="${item.image}" class="img-sm" alt="${item.nom}"></div>
+                            <figcaption class="info">
+                                <a href="./product-detail.html?produit=${item.id}" class="title text-dark">${item.nom}</a>
+                                <p class="text-muted small">Format : ${item.format}<br>${item.description || "Produit local"}</p>
+                            </figcaption>
+                        </figure>
+                    </td>
+                    <td>
+                        <div class="input-group input-spinner">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-light moins" type="button">−</button>
+                            </div>
+                            <input type="text" class="form-control text-center" value="${item.quantite}" readonly>
+                            <div class="input-group-append">
+                                <button class="btn btn-light plus" type="button">+</button>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="price-wrap">
+                            <var class="price font-weight-bold">${formatPrix(item.prix * item.quantite)}</var>
+                            <small class="text-muted d-block">${formatPrix(item.prix)} l'unité</small>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <button type="button" class="btn btn-danger supprimer">Supprimer</button>
+                    </td>`;
+
+                tr.querySelector(".moins").addEventListener("click", () => {
+                    if (item.quantite > 1) item.quantite -= 1;
+                    else cart.splice(index, 1);
+                    saveCart(cart); renderCart();
+                });
+                tr.querySelector(".plus").addEventListener("click", () => {
+                    item.quantite += 1;
+                    saveCart(cart); renderCart();
+                });
+                tr.querySelector(".supprimer").addEventListener("click", () => {
+                    cart.splice(index, 1);
+                    saveCart(cart); renderCart();
+                });
+                container.appendChild(tr);
+            });
+        }
+
+        const subtotal = cart.reduce((sum, item) => sum + (Number(item.prix) * Number(item.quantite)), 0);
+        subtotalEl.textContent = formatPrix(subtotal);
+        totalEl.textContent = formatPrix(subtotal);
+        document.querySelectorAll(".notify").forEach(el => el.textContent = cart.reduce((sum, item) => sum + Number(item.quantite), 0));
+    }
+    renderCart();
+})();
+</script>
+
+</body>
+</html>
