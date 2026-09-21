@@ -109,6 +109,55 @@ textarea:focus {
 
 
 <style id="tbs-theme">
+	/* =========================================
+   INDEX — 2 PRODUITS PAR LIGNE SUR MOBILE
+   ========================================= */
+
+@media (max-width: 767px) {
+
+    /* Ligne contenant les produits */
+    .section-name .row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+    }
+
+    /* Chaque produit = 50% */
+    .section-name .row > .col-md-4 {
+        width: 50% !important;
+        max-width: 50% !important;
+        flex: 0 0 50% !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+    }
+
+    /* Carte */
+    .section-name .card-product-grid {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Image */
+    .section-name .card-product-grid img {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        object-fit: contain !important;
+    }
+
+    /* Informations du produit */
+    .section-name .info-wrap {
+        padding: 8px !important;
+    }
+
+    .section-name .title {
+        font-size: 15px !important;
+    }
+
+    .section-name .price {
+        font-size: 15px !important;
+        font-weight: 600 !important;
+    }
+}
 /* Thiossane Business Service : thème vert */
 .btn-primary,.btn-primary:hover,.btn-primary:focus,.btn-primary:active,
 .btn-primary.disabled,.btn-primary:disabled{
