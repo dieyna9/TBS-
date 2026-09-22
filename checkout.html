@@ -93,7 +93,12 @@ textarea.form-control{min-height:auto;}
   .header-main .btn{font-size:13px;padding:8px 10px;}
 }
 </style>
-
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init({
+    publicKey: "0zgudOjCIv9Hd_QSK",
+  });
+</script>
 </head>
 <body>
 
@@ -438,7 +443,50 @@ textarea.form-control{min-height:auto;}
       payButton.innerHTML = '<i class="fa fa-lock"></i> Continuer vers le paiement';
       return;
     }
+// Notification e-mail à TBS
+try {
+  const productsText = cart.map(function(item) {
+    const qty = Number(item.quantite) || 1;
+    const price = Number(item.prix) || 0;
 
+    return (item.nom || "Produit") +
+      (item.format ? " - " + item.format : "") +
+      " x " + qty +
+      " = " + (price * qty).toLocaleString("fr-FR") + " FCFA";
+  }).join("\n");
+console.log("DONNÉES EMAILJS :", {
+  orderNumber,
+  prenom,
+  nom,
+  telephone,
+  email,
+  adresse,
+  ville,
+  quartier,
+  subtotal,
+  productsText
+});
+  await emailjs.send(
+    "service_rqfi1wd",
+    "template_zeqzile",
+    {
+      order_number: orderNumber,
+      customer_name: (prenom + " " + nom).trim(),
+      customer_phone: telephone,
+      customer_email: email,
+      delivery_address: adresse,
+      delivery_city: ville,
+      quartier: quartier,
+      products: productsText,
+      total: subtotal,
+      payment_method: "Paiement en ligne"
+    }
+  );
+
+  console.log("Notification e-mail envoyée à TBS.");
+} catch (emailError) {
+  console.error("Erreur notification e-mail :", emailError);
+}
     // Sauvegarde locale uniquement pour la page de confirmation.
     localStorage.setItem("tbs_pending_order", JSON.stringify({
       reference: orderNumber,
@@ -450,65 +498,43 @@ textarea.form-control{min-height:auto;}
       devise: "XOF"
     }));
 
-    // Création du paiement PayTech via l'Edge Function sécurisée.
-    // Les clés PayTech restent côté serveur dans Supabase.
-    payButton.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Ouverture du paiement...';
+    // Paiement à la livraison + confirmation WhatsApp
 
-    const paytechEndpoint =
-      "https://hclmncksgqvlqaenmjja.supabase.co/functions/v1/paytech-payment";
+const productsText = cart.map(function(item) {
+  const qty = Number(item.quantite) || 1;
+  const price = Number(item.prix) || 0;
 
-    // PayTech demande des URLs HTTPS pour les redirections.
-    // En local, on ne les envoie pas afin de pouvoir tester l'appel API.
-    const redirectUrls = {
-  success_url:
-    "https://hclmncksgqvlqaenmjja.supabase.co/functions/v1/paytech-success",
+  return (
+    (item.nom || "Produit") +
+    (item.format ? " - " + item.format : "") +
+    " x " + qty +
+    " = " + (price * qty).toLocaleString("fr-FR") + " FCFA"
+  );
+}).join("\n");
 
-  cancel_url:
-    "https://hclmncksgqvlqaenmjja.supabase.co/functions/v1/paytech-cancel",
-};
+const whatsappMessage =
+  "🛒 NOUVELLE COMMANDE T.B.S.\n\n" +
+  "Référence : " + orderNumber + "\n\n" +
+  "CLIENT\n" +
+  "Nom : " + (prenom + " " + nom).trim() + "\n" +
+  "Téléphone : " + telephone + "\n" +
+  "E-mail : " + email + "\n\n" +
+  "LIVRAISON\n" +
+  "Adresse : " + adresse + "\n" +
+  "Ville : " + ville + "\n" +
+  "Quartier : " + quartier + "\n\n" +
+  "COMMANDE\n" +
+  productsText + "\n\n" +
+  "TOTAL : " + Number(subtotal).toLocaleString("fr-FR") + " FCFA\n\n" +
+  "MODE DE PAIEMENT : Paiement à la livraison";
 
-    const paytechResponse = await fetch(paytechEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        item_name: "Commande T.B.S. " + orderNumber,
-        item_price: subtotal,
-        ref_command: orderNumber,
-        command_name: "Commande T.B.S. " + orderNumber,
-        ...redirectUrls,
-      }),
-    });
+const whatsappUrl =
+  "https://wa.me/221771747487?text=" +
+  encodeURIComponent(whatsappMessage);
 
-    let paytechResult;
-
-    try {
-      paytechResult = await paytechResponse.json();
-    } catch (parseError) {
-      console.error("Réponse PayTech invalide:", parseError);
-      alert("La réponse du service de paiement est invalide. Veuillez réessayer.");
-      payButton.disabled = false;
-      payButton.innerHTML = '<i class="fa fa-lock"></i> Continuer vers le paiement';
-      return;
-    }
-
-    console.log("Réponse PayTech:", paytechResult);
-
-    if (paytechResult.success === 1 && paytechResult.redirect_url) {
-      window.location.href = paytechResult.redirect_url;
-      return;
-    }
-
-    console.error("Erreur PayTech:", paytechResult);
-    alert(
-      paytechResult.message ||
-      "Impossible d'ouvrir le paiement PayTech. Veuillez réessayer."
-    );
-
-    payButton.disabled = false;
-    payButton.innerHTML = '<i class="fa fa-lock"></i> Continuer vers le paiement';
-  });
+window.location.href = whatsappUrl;
+return;
+});
 })();
 </script>
 
